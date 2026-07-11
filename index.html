@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NL-DG 求職者リスト</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans JP',sans-serif;background:#f0f4f8;color:#1a1a1a;}
+.header{background:#0D2B5E;padding:20px 0;}
+.header-inner{max-width:1000px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;}
+.logo{color:#fff;font-size:20px;font-weight:700;}
+.logo span{color:#C9A84C;}
+.header-sub{color:rgba(255,255,255,0.5);font-size:13px;}
+.wrap{max-width:1000px;margin:0 auto;padding:32px 24px;}
+.stats{background:#fff;border-radius:12px;padding:20px 24px;margin-bottom:28px;display:flex;align-items:center;gap:24px;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.stat{text-align:center;}
+.stat-num{font-size:32px;font-weight:700;color:#0D2B5E;}
+.stat-label{font-size:12px;color:#888;margin-top:2px;}
+.search-wrap{margin-bottom:24px;}
+.search-wrap input{width:100%;padding:14px 18px;border:2px solid #dde3ee;border-radius:10px;font-size:15px;font-family:inherit;outline:none;transition:border-color 0.2s;}
+.search-wrap input:focus{border-color:#0D2B5E;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.06);overflow:hidden;transition:transform 0.15s,box-shadow 0.15s;}
+.card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.12);}
+.card-inner{padding:20px;}
+.card-no{font-size:11px;font-weight:700;color:#C9A84C;letter-spacing:2px;margin-bottom:8px;}
+.card-name{font-size:17px;font-weight:700;color:#0D2B5E;margin-bottom:14px;line-height:1.4;}
+.card-btn{display:block;text-align:center;background:#0D2B5E;color:#fff;padding:10px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;transition:background 0.15s;}
+.card-btn:hover{background:#1a4a8a;}
+.card-btn-icon{margin-right:6px;}
+.no-result{text-align:center;padding:60px;color:#aaa;font-size:15px;}
+footer{text-align:center;padding:28px;color:#aaa;font-size:12px;}
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr 1fr;}
+  .stat-num{font-size:24px;}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">株式会社 <span>NL-DG</span>　求職者データベース</div>
+    <div class="header-sub">社内専用</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num" id="totalCount">67</div>
+      <div class="stat-label">登録者数</div>
+    </div>
+    <div class="stat" style="margin-left:auto;color:#888;font-size:13px;">
+      名前で検索できます ↓
+    </div>
+  </div>
+
+  <div class="search-wrap">
+    <input type="text" id="searchBox" placeholder="🔍　名前で検索（例：Zin、Khin...）" oninput="filterCards()">
+  </div>
+
+  <div class="grid" id="cardGrid"></div>
+  <div class="no-result" id="noResult" style="display:none;">該当する求職者が見つかりません</div>
+</div>
+
+<footer>
+  <p>© 2026 株式会社 NL-DG　|　社内専用ページ</p>
+</footer>
+
+<script>
+const candidates = [
+  {no:1,name:"Kyo Tagoo Naing",file:"001_Kyo Tagoo Naing.pdf"},
+  {no:2,name:"Thu Yein Win",file:"002_Thu Yein Win.pdf"},
+  {no:3,name:"Htet Myat Win",file:"003_htet.pdf"},
+  {no:4,name:"Wai Yan Tun",file:"004_Wai Yan Tun.pdf"},
+  {no:5,name:"Ohnmar Thet",file:"005_OHNMAR THET.pdf"},
+  {no:6,name:"Kyaw Kyaw Min",file:"006_Kyaw.pdf"},
+  {no:7,name:"Theint Nandar Soe",file:"007_Theint.pdf"},
+  {no:8,name:"Hsu Mon Aung",file:"008_Hsu Mon Aung.pdf"},
+  {no:9,name:"Han Ni Su San",file:"009_Han Ni Su San.pdf"},
+  {no:10,name:"Ku Ku Myat",file:"010_Ku Ku Myat.pdf"},
+  {no:11,name:"Thwe Mon Oo",file:"011_Thwe Mon Oo.pdf"},
+  {no:12,name:"Su Lai Nadi",file:"012_Su Lai Nadi.pdf"},
+  {no:13,name:"Su Wai Phyoe",file:"013_Su Wai Phyoe.pdf"},
+  {no:14,name:"Htet Hmu Swe",file:"014_Htet Hmu Swe.pdf"},
+  {no:15,name:"Phyu Phyu Zin",file:"015_Phyu Phyu Zin.pdf"},
+  {no:16,name:"Win Shwe Yee Nwe",file:"016_Win Shwe Yee Nwe.pdf"},
+  {no:17,name:"Wai Wai Lwin",file:"017_Wai Wai Lwin.pdf"},
+  {no:18,name:"Mya Thu Zar",file:"018_Mya Thu Zar.pdf"},
+  {no:19,name:"Wai Mon Kyaw",file:"019_Wai Mon Kyaw.pdf"},
+  {no:20,name:"Zezawah Soe",file:"020_Zezawah Soe.pdf"},
+  {no:21,name:"Shwin Lai Tun",file:"021_Shwin Lai Tun.pdf"},
+  {no:22,name:"Tin Zar Oo",file:"022_Tin Zar Oo.pdf"},
+  {no:23,name:"Aye Aye Khet",file:"023_Aye Aye Khet.pdf"},
+  {no:24,name:"Pwint Phyu Khaing",file:"024_Pwint Phyu Khaing.pdf"},
+  {no:25,name:"Pyae Sandy Kyaw",file:"025_Pyae Sandy Kyaw.pdf"},
+  {no:26,name:"Aye Aye Maw",file:"026_Aye Aye Maw.pdf"},
+  {no:27,name:"Chan Myae Hein",file:"027_Chan Myae Hein.pdf"},
+  {no:28,name:"R Zar Ni",file:"028_ZAR.pdf"},
+  {no:29,name:"Nwe Zin Myint",file:"029_Nwe Zin Myint.pdf"},
+  {no:30,name:"Thazin Htwe",file:"030_Thazin Htwe.pdf"},
+  {no:31,name:"Naw Eh May Gay",file:"031_Naw Eh May Gay.pdf"},
+  {no:32,name:"Su Mon Thwe",file:"032_Su Mon Thwe.pdf"},
+  {no:33,name:"Ei Ei Phyo",file:"033_Ei Ei Phyo.pdf"},
+  {no:34,name:"Aung Khant Zaw",file:"034_Aung.pdf"},
+  {no:35,name:"Thurein Pyae Wun",file:"035_Thurein Pyae Wun.pdf"},
+  {no:36,name:"Yan Lin Zaw",file:"036_Yan Lin Zaw.pdf"},
+  {no:37,name:"Hay Mhann Lin",file:"037_HAY MHANN LIN.pdf"},
+  {no:38,name:"Thet Myat Noe Oo",file:"038_Thet Myat Noe Oo.pdf"},
+  {no:39,name:"Me Me Zin",file:"039_Me Me Zin.pdf"},
+  {no:40,name:"Ye Min Tun",file:"040_YeMInTun.pdf"},
+  {no:41,name:"Tun Win Naing",file:"041_Tun Win Naing.pdf"},
+  {no:42,name:"Htet Htet Eaint Myat Chel",file:"042_HTET HTET EAINT MYAT CHEL.pdf"},
+  {no:43,name:"Khin Cho Cho",file:"043_KHIN CHO CHO.pdf"},
+  {no:44,name:"Khine Zin Moe",file:"044_KHINE ZIN MOE.pdf"},
+  {no:45,name:"Myat Thazin Htun",file:"045_MYAT THAZIN HTUN.pdf"},
+  {no:46,name:"Poe Thandar Htun",file:"046_POE THANDAR TUN.pdf"},
+  {no:47,name:"Su Thinzar Win",file:"047_SU THINZAR WIN.pdf"},
+  {no:48,name:"Thu Rein Myint Mo Htet Aung",file:"048_THU REIN MYINT MO HTET AUNG.pdf"},
+  {no:49,name:"Win Moe Kyaw",file:"049_WIN MOE KYAW.pdf"},
+  {no:50,name:"Ye Naing Soe",file:"050_YE NAING SOE.pdf"},
+  {no:51,name:"Zar Zar Min",file:"051_ZAR ZAR MIN.pdf"},
+  {no:52,name:"Thet Htar Swe",file:"052_Ms.pdf"},
+  {no:53,name:"Nang Khin Thu Zar Aung",file:"053_Nang Khin Thu Zar Aung.pdf"},
+  {no:54,name:"Nyo Nyo Htwe",file:"054_Nyo Nyo Htwe.pdf"},
+  {no:55,name:"Thu Zar Win",file:"055_THU ZAR WIN.pdf"},
+  {no:56,name:"Kaung Myat Kyaw",file:"056_CV.pdf"},
+  {no:57,name:"Ei Thiri Kyaw",file:"057_EI THIRI KYAW.pdf"},
+  {no:58,name:"Htet Htet",file:"058_Htet Htet.pdf"},
+  {no:59,name:"Aung Pyae Sone",file:"059_Aung Pyae Sone.pdf"},
+  {no:60,name:"Zin Nwe Soe",file:"060_Zin Nwe Soe.pdf"},
+  {no:61,name:"Khin Khin Thi",file:"061_KHIN KHIN THI.pdf"},
+  {no:62,name:"Thiha Soe",file:"062_THIHA.pdf"},
+  {no:63,name:"Khin Khin Thi (2)",file:"063_khin Khin Thi cv.pdf"},
+  {no:64,name:"Zin Win Nwe",file:"064_Zin Win Nwe.pdf"},
+  {no:65,name:"Theint Thinzar Aung",file:"065_Theint Thinzar Aung.pdf"},
+  {no:66,name:"Nay Myo Chan",file:"066_Nay Myo Chan.pdf"},
+  {no:67,name:"Hay Mann Oo",file:"067_Hay Mann Oo.pdf"}
+];
+
+function renderCards(list) {
+  const grid = document.getElementById('cardGrid');
+  const noResult = document.getElementById('noResult');
+  if (list.length === 0) {
+    grid.innerHTML = '';
+    noResult.style.display = 'block';
+    return;
+  }
+  noResult.style.display = 'none';
+  grid.innerHTML = list.map(c => `
+    <div class="card" data-name="${c.name.toLowerCase()}">
+      <div class="card-inner">
+        <div class="card-no">No. ${String(c.no).padStart(3,'0')}</div>
+        <div class="card-name">${c.name}</div>
+        <a class="card-btn" href="pdfs/${encodeURIComponent(c.file)}" target="_blank">
+          <span class="card-btn-icon">📄</span>履歴書を開く
+        </a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCards() {
+  const q = document.getElementById('searchBox').value.toLowerCase();
+  const filtered = q ? candidates.filter(c => c.name.toLowerCase().includes(q)) : candidates;
+  document.getElementById('totalCount').textContent = filtered.length;
+  renderCards(filtered);
+}
+
+renderCards(candidates);
+</script>
+</body>
+</html>
