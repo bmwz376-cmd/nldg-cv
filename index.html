@@ -20,13 +20,42 @@ body{font-family:'Noto Sans JP',sans-serif;background:#f0f4f8;color:#1a1a1a;}
 .search-wrap{margin-bottom:24px;}
 .search-wrap input{width:100%;padding:14px 18px;border:2px solid #dde3ee;border-radius:10px;font-size:15px;font-family:inherit;outline:none;transition:border-color 0.2s;}
 .search-wrap input:focus{border-color:#0D2B5E;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;}
-.card{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.07);overflow:hidden;transition:transform 0.15s,box-shadow 0.15s;cursor:pointer;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.07);overflow:hidden;transition:transform 0.15s,box-shadow 0.15s;}
 .card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.13);}
-.card-thumb{width:100%;height:200px;background:#eef2f8;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-.card-thumb canvas{width:100%!important;height:200px!important;object-fit:cover;}
-.card-thumb .loading{color:#aaa;font-size:12px;position:absolute;}
-.card-thumb .placeholder{font-size:48px;color:#c5d4ea;}
+
+/* 顔写真エリア：正方形でクロップ表示 */
+.card-photo{
+  width:100%;
+  padding-top:100%; /* 1:1 正方形 */
+  position:relative;
+  background:#eef2f8;
+  overflow:hidden;
+}
+.card-photo .crop-wrap{
+  position:absolute;
+  top:0; left:0; right:0; bottom:0;
+  overflow:hidden;
+}
+/* canvasをここに配置、右上エリアをズームして表示 */
+.card-photo canvas{
+  position:absolute;
+  /* 右上の顔写真エリアを表示: 右から20%、上から5%、幅20%、高さ25%のエリアを切り抜く */
+  transform-origin: top right;
+}
+.card-photo .loading{
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  color:#aaa; font-size:12px;
+}
+.card-photo .placeholder{
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  font-size:48px; color:#c5d4ea;
+  display:none;
+}
 .card-info{padding:14px 16px;}
 .card-no{font-size:10px;font-weight:700;color:#C9A84C;letter-spacing:2px;margin-bottom:4px;}
 .card-name{font-size:14px;font-weight:700;color:#0D2B5E;margin-bottom:12px;line-height:1.4;}
@@ -134,37 +163,61 @@ const candidates = [
   {no:67,name:"Hay Mann Oo",file:"pdfs/067_Hay Mann Oo.pdf"}
 ];
 
-// PDFサムネイル生成（1ページ目を200px高でレンダリング）
-async function renderThumb(canvas, pdfUrl) {
+// PDFの右上エリア（顔写真位置）を切り抜いてcanvasに描画
+async function renderFaceThumb(container, pdfUrl) {
+  const loadingEl = container.querySelector('.loading');
+  const placeholderEl = container.querySelector('.placeholder');
+  const cropWrap = container.querySelector('.crop-wrap');
   try {
     const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
     const page = await pdf.getPage(1);
-    const viewport = page.getViewport({scale: 1});
-    const scale = 200 / viewport.height;
-    const scaled = page.getViewport({scale});
-    canvas.width = scaled.width;
-    canvas.height = scaled.height;
-    await page.render({canvasContext: canvas.getContext('2d'), viewport: scaled}).promise;
-    canvas.parentElement.querySelector('.loading').style.display = 'none';
+
+    // まず高解像度でページ全体をレンダリング
+    const scale = 3.0;
+    const viewport = page.getViewport({scale});
+    const fullCanvas = document.createElement('canvas');
+    fullCanvas.width = viewport.width;
+    fullCanvas.height = viewport.height;
+    await page.render({canvasContext: fullCanvas.getContext('2d'), viewport}).promise;
+
+    // 顔写真エリアを切り抜く（右上: x=72%〜97%, y=3%〜28% ）
+    const W = fullCanvas.width;
+    const H = fullCanvas.height;
+    const sx = Math.floor(W * 0.72);
+    const sy = Math.floor(H * 0.03);
+    const sw = Math.floor(W * 0.25);
+    const sh = Math.floor(H * 0.25);
+
+    // 出力用canvas（正方形）
+    const outCanvas = document.createElement('canvas');
+    const outSize = 200;
+    outCanvas.width = outSize;
+    outCanvas.height = outSize;
+    const ctx = outCanvas.getContext('2d');
+    ctx.drawImage(fullCanvas, sx, sy, sw, sh, 0, 0, outSize, outSize);
+
+    loadingEl.style.display = 'none';
+    cropWrap.appendChild(outCanvas);
+    outCanvas.style.width = '100%';
+    outCanvas.style.height = '100%';
   } catch(e) {
-    const el = canvas.parentElement;
-    el.querySelector('.loading').style.display = 'none';
-    el.querySelector('.placeholder').style.display = 'block';
+    loadingEl.style.display = 'none';
+    placeholderEl.style.display = 'block';
   }
 }
 
-// IntersectionObserver で画面内に入ったときだけ読み込む（高速化）
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
-      const canvas = e.target.querySelector('canvas');
-      if (canvas && canvas.dataset.src && !canvas.dataset.loaded) {
-        canvas.dataset.loaded = '1';
-        renderThumb(canvas, canvas.dataset.src);
+      const container = e.target.querySelector('.card-photo');
+      if (container && container.dataset.src && !container.dataset.loaded) {
+        container.dataset.loaded = '1';
+        renderFaceThumb(container, container.dataset.src);
+        observer.unobserve(e.target);
       }
     }
   });
-}, {rootMargin: '200px'});
+}, {rootMargin: '300px'});
 
 function renderCards(list) {
   const grid = document.getElementById('cardGrid');
@@ -176,16 +229,16 @@ function renderCards(list) {
   }
   noResult.style.display = 'none';
   grid.innerHTML = list.map(c => `
-    <div class="card" onclick="window.open('${c.file}','_blank')">
-      <div class="card-thumb">
+    <div class="card">
+      <div class="card-photo" data-src="${c.file}">
+        <div class="crop-wrap"></div>
         <span class="loading">読み込み中...</span>
-        <span class="placeholder" style="display:none">👤</span>
-        <canvas data-src="${c.file}"></canvas>
+        <span class="placeholder">👤</span>
       </div>
       <div class="card-info">
         <div class="card-no">No. ${String(c.no).padStart(3,'0')}</div>
         <div class="card-name">${c.name}</div>
-        <a class="card-btn" href="${c.file}" target="_blank" onclick="event.stopPropagation()">📄 履歴書を開く</a>
+        <a class="card-btn" href="${c.file}" target="_blank">📄 履歴書を開く</a>
       </div>
     </div>
   `).join('');
