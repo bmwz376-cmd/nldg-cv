@@ -46,7 +46,7 @@ footer{text-align:center;padding:28px;color:#aaa;font-size:12px;}
 <div class="wrap">
   <div class="stats">
     <div>
-      <div class="stat-num" id="totalCount">67</div>
+      <div class="stat-num" id="totalCount">96</div>
       <div class="stat-label">登録求職者数</div>
     </div>
     <div style="margin-left:auto;color:#888;font-size:13px;">名前で検索できます 🔍</div>
@@ -127,6 +127,35 @@ const candidates = [
   {no:65,name:"Theint Thinzar Aung",file:"pdfs/065_Theint Thinzar Aung.pdf",photo:"photos/065_Theint Thinzar Aung.jpg"},
   {no:66,name:"Nay Myo Chan",file:"pdfs/066_Nay Myo Chan.pdf",photo:"photos/066_Nay Myo Chan.jpg"},
   {no:67,name:"Hay Mann Oo",file:"pdfs/067_Hay Mann Oo.pdf",photo:"photos/067_Hay Mann Oo.jpg"}
+  {no:68,name:"Aung Myo Oo",file:"pdfs/068_Aung Myo Oo.pdf",photo:"photos/068_Aung Myo Oo.jpg"},
+  {no:69,name:"La Min Soe",file:"pdfs/069_La Min Soe.pdf",photo:"photos/069_La Min Soe.jpg"},
+  {no:70,name:"Phoo Myat Kay Khaing",file:"pdfs/070_Phoo Myat Kay Khaing.pdf",photo:"photos/070_Phoo Myat Kay Khaing.jpg"},
+  {no:71,name:"Si Thu Min Htet",file:"pdfs/071_Si Thu Min Htet.pdf",photo:"photos/071_Si Thu Min Htet.jpg"},
+  {no:72,name:"Swan Gone Yee",file:"pdfs/072_Swan Gone Yee.pdf",photo:"photos/072_Swan Gone Yee.jpg"},
+  {no:73,name:"Tin Nilar Myo",file:"pdfs/073_Tin Nilar Myo.pdf",photo:"photos/073_Tin Nilar Myo.jpg"},
+  {no:74,name:"Zin Min Htet",file:"pdfs/074_Zin Min Htet.pdf",photo:"photos/074_Zin Min Htet.jpg"},
+  {no:75,name:"Aye Phyo Han",file:"pdfs/075_Aye Phyo Han.pdf",photo:"photos/075_Aye Phyo Han.jpg"},
+  {no:76,name:"Ei Mon Mon Kyaw",file:"pdfs/076_Ei Mon Mon Kyaw.pdf",photo:"photos/076_Ei Mon Mon Kyaw.jpg"},
+  {no:77,name:"Kay Zin Soe",file:"pdfs/077_Kay Zin Soe.pdf",photo:"photos/077_Kay Zin Soe.jpg"},
+  {no:78,name:"Kyaw Thu Tun",file:"pdfs/078_Kyaw Thu Tun.pdf",photo:"photos/078_Kyaw Thu Tun.jpg"},
+  {no:79,name:"Thet Ngon Phoo",file:"pdfs/079_Thet Ngon Phoo.pdf",photo:"photos/079_Thet Ngon Phoo.jpg"},
+  {no:80,name:"July Moe Oo",file:"pdfs/080_July Moe Oo.pdf",photo:"photos/080_July Moe Oo.jpg"},
+  {no:81,name:"Tin Tin Hlaing",file:"pdfs/081_Tin Tin Hlaing.pdf",photo:"photos/081_Tin Tin Hlaing.jpg"},
+  {no:82,name:"Hnin Wyut Yi Win",file:"pdfs/082_Hnin Wyut Yi Win.pdf",photo:"photos/082_Hnin Wyut Yi Win.jpg"},
+  {no:83,name:"Hnin Nu Nu Aung",file:"pdfs/083_Hnin Nu Nu Aung.pdf",photo:"photos/083_Hnin Nu Nu Aung.jpg"},
+  {no:84,name:"Thandar May Oo",file:"pdfs/084_Thandar May Oo.pdf",photo:"photos/084_Thandar May Oo.jpg"},
+  {no:85,name:"Phyu Thae Wai",file:"pdfs/085_Phyu Thae Wai.pdf",photo:"photos/085_Phyu Thae Wai.jpg"},
+  {no:86,name:"Wai Wai Aung",file:"pdfs/086_Wai Wai Aung.pdf",photo:"photos/086_Wai Wai Aung.jpg"},
+  {no:87,name:"Ei Ei Khaing",file:"pdfs/087_Ei Ei Khaing.pdf",photo:"photos/087_Ei Ei Khaing.jpg"},
+  {no:88,name:"Win Lalyar Paing",file:"pdfs/088_Win Lalyar Paing.pdf",photo:"photos/088_Win Lalyar Paing.jpg"},
+  {no:89,name:"Wai Zin Ko",file:"pdfs/089_Wai Zin Ko.pdf",photo:"photos/089_Wai Zin Ko.jpg"},
+  {no:90,name:"Ei Thinzar Oo",file:"pdfs/090_Ei Thinzar Oo.pdf",photo:"photos/090_Ei Thinzar Oo.jpg"},
+  {no:91,name:"Jue Jue Khin",file:"pdfs/091_Jue Jue Khin.pdf",photo:"photos/091_Jue Jue Khin.jpg"},
+  {no:92,name:"Maung Thant",file:"pdfs/092_Maung Thant.pdf",photo:"photos/092_Maung Thant.jpg"},
+  {no:93,name:"Aung Nyein",file:"pdfs/093_Aung Nyein.pdf",photo:"photos/093_Aung Nyein.jpg"},
+  {no:94,name:"Zin Thu Win",file:"pdfs/094_Zin Thu Win.pdf",photo:"photos/094_Zin Thu Win.jpg"},
+  {no:95,name:"Htet Aung Aung",file:"pdfs/095_Htet Aung Aung.pdf",photo:"photos/095_Htet Aung Aung.jpg"},
+  {no:96,name:"Win Pyae Pyae Soe",file:"pdfs/096_Win Pyae Pyae Soe.pdf",photo:"photos/096_Win Pyae Pyae Soe.jpg"}
 ];
 function buildCards(list){
   const grid=document.getElementById('cardGrid');
