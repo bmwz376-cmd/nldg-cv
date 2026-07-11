@@ -23,39 +23,9 @@ body{font-family:'Noto Sans JP',sans-serif;background:#f0f4f8;color:#1a1a1a;}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;}
 .card{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.07);overflow:hidden;transition:transform 0.15s,box-shadow 0.15s;}
 .card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.13);}
-
-/* 顔写真エリア：正方形でクロップ表示 */
-.card-photo{
-  width:100%;
-  padding-top:100%; /* 1:1 正方形 */
-  position:relative;
-  background:#eef2f8;
-  overflow:hidden;
-}
-.card-photo .crop-wrap{
-  position:absolute;
-  top:0; left:0; right:0; bottom:0;
-  overflow:hidden;
-}
-/* canvasをここに配置、右上エリアをズームして表示 */
-.card-photo canvas{
-  position:absolute;
-  /* 右上の顔写真エリアを表示: 右から20%、上から5%、幅20%、高さ25%のエリアを切り抜く */
-  transform-origin: top right;
-}
-.card-photo .loading{
-  position:absolute;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  color:#aaa; font-size:12px;
-}
-.card-photo .placeholder{
-  position:absolute;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  font-size:48px; color:#c5d4ea;
-  display:none;
-}
+.card-photo{width:100%;aspect-ratio:1/1;background:#eef2f8;overflow:hidden;position:relative;}
+.card-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+.card-photo .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:56px;color:#c5d4ea;position:absolute;top:0;left:0;}
 .card-info{padding:14px 16px;}
 .card-no{font-size:10px;font-weight:700;color:#C9A84C;letter-spacing:2px;margin-bottom:4px;}
 .card-name{font-size:14px;font-weight:700;color:#0D2B5E;margin-bottom:12px;line-height:1.4;}
@@ -70,16 +40,16 @@ footer{text-align:center;padding:28px;color:#aaa;font-size:12px;}
 <header class="header">
   <div class="header-inner">
     <div class="logo">株式会社 <span>NL-DG</span>　求職者データベース</div>
-    <div class="header-sub">社内専用</div>
+    <div class="header-sub">社内専用ページ</div>
   </div>
 </header>
 <div class="wrap">
   <div class="stats">
     <div>
       <div class="stat-num" id="totalCount">67</div>
-      <div class="stat-label">登録者数</div>
+      <div class="stat-label">登録求職者数</div>
     </div>
-    <div style="margin-left:auto;color:#888;font-size:13px;">名前で検索できます ↓</div>
+    <div style="margin-left:auto;color:#888;font-size:13px;">名前で検索できます 🔍</div>
   </div>
   <div class="search-wrap">
     <input type="text" id="searchBox" placeholder="🔍　名前で検索（例：Zin、Khin...）" oninput="filterCards()">
@@ -88,171 +58,100 @@ footer{text-align:center;padding:28px;color:#aaa;font-size:12px;}
   <div class="no-result" id="noResult" style="display:none;">該当する求職者が見つかりません</div>
 </div>
 <footer><p>© 2026 株式会社 NL-DG　|　社内専用ページ</p></footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
 const candidates = [
-  {no:1,name:"Kyo Tagoo Naing",file:"pdfs/001_Kyo Tagoo Naing.pdf"},
-  {no:2,name:"Thu Yein Win",file:"pdfs/002_Thu Yein Win.pdf"},
-  {no:3,name:"Htet Myat Win",file:"pdfs/003_htet.pdf"},
-  {no:4,name:"Wai Yan Tun",file:"pdfs/004_Wai Yan Tun.pdf"},
-  {no:5,name:"Ohnmar Thet",file:"pdfs/005_OHNMAR THET.pdf"},
-  {no:6,name:"Kyaw Kyaw Min",file:"pdfs/006_Kyaw.pdf"},
-  {no:7,name:"Theint Nandar Soe",file:"pdfs/007_Theint.pdf"},
-  {no:8,name:"Hsu Mon Aung",file:"pdfs/008_Hsu Mon Aung.pdf"},
-  {no:9,name:"Han Ni Su San",file:"pdfs/009_Han Ni Su San.pdf"},
-  {no:10,name:"Ku Ku Myat",file:"pdfs/010_Ku Ku Myat.pdf"},
-  {no:11,name:"Thwe Mon Oo",file:"pdfs/011_Thwe Mon Oo.pdf"},
-  {no:12,name:"Su Lai Nadi",file:"pdfs/012_Su Lai Nadi.pdf"},
-  {no:13,name:"Su Wai Phyoe",file:"pdfs/013_Su Wai Phyoe.pdf"},
-  {no:14,name:"Htet Hmu Swe",file:"pdfs/014_Htet Hmu Swe.pdf"},
-  {no:15,name:"Phyu Phyu Zin",file:"pdfs/015_Phyu Phyu Zin.pdf"},
-  {no:16,name:"Win Shwe Yee Nwe",file:"pdfs/016_Win Shwe Yee Nwe.pdf"},
-  {no:17,name:"Wai Wai Lwin",file:"pdfs/017_Wai Wai Lwin.pdf"},
-  {no:18,name:"Mya Thu Zar",file:"pdfs/018_Mya Thu Zar.pdf"},
-  {no:19,name:"Wai Mon Kyaw",file:"pdfs/019_Wai Mon Kyaw.pdf"},
-  {no:20,name:"Zezawah Soe",file:"pdfs/020_Zezawah Soe.pdf"},
-  {no:21,name:"Shwin Lai Tun",file:"pdfs/021_Shwin Lai Tun.pdf"},
-  {no:22,name:"Tin Zar Oo",file:"pdfs/022_Tin Zar Oo.pdf"},
-  {no:23,name:"Aye Aye Khet",file:"pdfs/023_Aye Aye Khet.pdf"},
-  {no:24,name:"Pwint Phyu Khaing",file:"pdfs/024_Pwint Phyu Khaing.pdf"},
-  {no:25,name:"Pyae Sandy Kyaw",file:"pdfs/025_Pyae Sandy Kyaw.pdf"},
-  {no:26,name:"Aye Aye Maw",file:"pdfs/026_Aye Aye Maw.pdf"},
-  {no:27,name:"Chan Myae Hein",file:"pdfs/027_Chan Myae Hein.pdf"},
-  {no:28,name:"R Zar Ni",file:"pdfs/028_ZAR.pdf"},
-  {no:29,name:"Nwe Zin Myint",file:"pdfs/029_Nwe Zin Myint.pdf"},
-  {no:30,name:"Thazin Htwe",file:"pdfs/030_Thazin Htwe.pdf"},
-  {no:31,name:"Naw Eh May Gay",file:"pdfs/031_Naw Eh May Gay.pdf"},
-  {no:32,name:"Su Mon Thwe",file:"pdfs/032_Su Mon Thwe.pdf"},
-  {no:33,name:"Ei Ei Phyo",file:"pdfs/033_Ei Ei Phyo.pdf"},
-  {no:34,name:"Aung Khant Zaw",file:"pdfs/034_Aung.pdf"},
-  {no:35,name:"Thurein Pyae Wun",file:"pdfs/035_Thurein Pyae Wun.pdf"},
-  {no:36,name:"Yan Lin Zaw",file:"pdfs/036_Yan Lin Zaw.pdf"},
-  {no:37,name:"Hay Mhann Lin",file:"pdfs/037_HAY MHANN LIN.pdf"},
-  {no:38,name:"Thet Myat Noe Oo",file:"pdfs/038_Thet Myat Noe Oo.pdf"},
-  {no:39,name:"Me Me Zin",file:"pdfs/039_Me Me Zin.pdf"},
-  {no:40,name:"Ye Min Tun",file:"pdfs/040_YeMInTun.pdf"},
-  {no:41,name:"Tun Win Naing",file:"pdfs/041_Tun Win Naing.pdf"},
-  {no:42,name:"Htet Htet Eaint Myat Chel",file:"pdfs/042_HTET HTET EAINT MYAT CHEL.pdf"},
-  {no:43,name:"Khin Cho Cho",file:"pdfs/043_KHIN CHO CHO.pdf"},
-  {no:44,name:"Khine Zin Moe",file:"pdfs/044_KHINE ZIN MOE.pdf"},
-  {no:45,name:"Myat Thazin Htun",file:"pdfs/045_MYAT THAZIN HTUN.pdf"},
-  {no:46,name:"Poe Thandar Htun",file:"pdfs/046_POE THANDAR TUN.pdf"},
-  {no:47,name:"Su Thinzar Win",file:"pdfs/047_SU THINZAR WIN.pdf"},
-  {no:48,name:"Thu Rein Myint Mo Htet Aung",file:"pdfs/048_THU REIN MYINT MO HTET AUNG.pdf"},
-  {no:49,name:"Win Moe Kyaw",file:"pdfs/049_WIN MOE KYAW.pdf"},
-  {no:50,name:"Ye Naing Soe",file:"pdfs/050_YE NAING SOE.pdf"},
-  {no:51,name:"Zar Zar Min",file:"pdfs/051_ZAR ZAR MIN.pdf"},
-  {no:52,name:"Thet Htar Swe",file:"pdfs/052_Ms.pdf"},
-  {no:53,name:"Nang Khin Thu Zar Aung",file:"pdfs/053_Nang Khin Thu Zar Aung.pdf"},
-  {no:54,name:"Nyo Nyo Htwe",file:"pdfs/054_Nyo Nyo Htwe.pdf"},
-  {no:55,name:"Thu Zar Win",file:"pdfs/055_THU ZAR WIN.pdf"},
-  {no:56,name:"Kaung Myat Kyaw",file:"pdfs/056_CV.pdf"},
-  {no:57,name:"Ei Thiri Kyaw",file:"pdfs/057_EI THIRI KYAW.pdf"},
-  {no:58,name:"Htet Htet",file:"pdfs/058_Htet Htet.pdf"},
-  {no:59,name:"Aung Pyae Sone",file:"pdfs/059_Aung Pyae Sone.pdf"},
-  {no:60,name:"Zin Nwe Soe",file:"pdfs/060_Zin Nwe Soe.pdf"},
-  {no:61,name:"Khin Khin Thi",file:"pdfs/061_KHIN KHIN THI.pdf"},
-  {no:62,name:"Thiha Soe",file:"pdfs/062_THIHA.pdf"},
-  {no:63,name:"Khin Khin Thi (2)",file:"pdfs/063_khin Khin Thi cv.pdf"},
-  {no:64,name:"Zin Win Nwe",file:"pdfs/064_Zin Win Nwe.pdf"},
-  {no:65,name:"Theint Thinzar Aung",file:"pdfs/065_Theint Thinzar Aung.pdf"},
-  {no:66,name:"Nay Myo Chan",file:"pdfs/066_Nay Myo Chan.pdf"},
-  {no:67,name:"Hay Mann Oo",file:"pdfs/067_Hay Mann Oo.pdf"}
+  {no:1,name:"Kyo Tagoo Naing",file:"pdfs/001_Kyo Tagoo Naing.pdf",photo:"photos/001_Kyo Tagoo Naing.jpg"},
+  {no:2,name:"Thu Yein Win",file:"pdfs/002_Thu Yein Win.pdf",photo:"photos/002_Thu Yein Win.jpg"},
+  {no:3,name:"Htet Myat Win",file:"pdfs/003_htet.pdf",photo:"photos/003_htet.jpg"},
+  {no:4,name:"Wai Yan Tun",file:"pdfs/004_Wai Yan Tun.pdf",photo:"photos/004_Wai Yan Tun.jpg"},
+  {no:5,name:"Ohnmar Thet",file:"pdfs/005_OHNMAR THET.pdf",photo:"photos/005_OHNMAR THET.jpg"},
+  {no:6,name:"Kyaw Kyaw Min",file:"pdfs/006_Kyaw.pdf",photo:"photos/006_Kyaw.jpg"},
+  {no:7,name:"Theint Nandar Soe",file:"pdfs/007_Theint.pdf",photo:"photos/007_Theint.jpg"},
+  {no:8,name:"Hsu Mon Aung",file:"pdfs/008_Hsu Mon Aung.pdf",photo:"photos/008_Hsu Mon Aung.jpg"},
+  {no:9,name:"Han Ni Su San",file:"pdfs/009_Han Ni Su San.pdf",photo:"photos/009_Han Ni Su San.jpg"},
+  {no:10,name:"Ku Ku Myat",file:"pdfs/010_Ku Ku Myat.pdf",photo:"photos/010_Ku Ku Myat.jpg"},
+  {no:11,name:"Thwe Mon Oo",file:"pdfs/011_Thwe Mon Oo.pdf",photo:"photos/011_Thwe Mon Oo.jpg"},
+  {no:12,name:"Su Lai Nadi",file:"pdfs/012_Su Lai Nadi.pdf",photo:"photos/012_Su Lai Nadi.jpg"},
+  {no:13,name:"Su Wai Phyoe",file:"pdfs/013_Su Wai Phyoe.pdf",photo:"photos/013_Su Wai Phyoe.jpg"},
+  {no:14,name:"Htet Hmu Swe",file:"pdfs/014_Htet Hmu Swe.pdf",photo:"photos/014_Htet Hmu Swe.jpg"},
+  {no:15,name:"Phyu Phyu Zin",file:"pdfs/015_Phyu Phyu Zin.pdf",photo:"photos/015_Phyu Phyu Zin.jpg"},
+  {no:16,name:"Win Shwe Yee Nwe",file:"pdfs/016_Win Shwe Yee Nwe.pdf",photo:"photos/016_Win Shwe Yee Nwe.jpg"},
+  {no:17,name:"Wai Wai Lwin",file:"pdfs/017_Wai Wai Lwin.pdf",photo:"photos/017_Wai Wai Lwin.jpg"},
+  {no:18,name:"Mya Thu Zar",file:"pdfs/018_Mya Thu Zar.pdf",photo:"photos/018_Mya Thu Zar.jpg"},
+  {no:19,name:"Wai Mon Kyaw",file:"pdfs/019_Wai Mon Kyaw.pdf",photo:"photos/019_Wai Mon Kyaw.jpg"},
+  {no:20,name:"Zezawah Soe",file:"pdfs/020_Zezawah Soe.pdf",photo:"photos/020_Zezawah Soe.jpg"},
+  {no:21,name:"Shwin Lai Tun",file:"pdfs/021_Shwin Lai Tun.pdf",photo:"photos/021_Shwin Lai Tun.jpg"},
+  {no:22,name:"Tin Zar Oo",file:"pdfs/022_Tin Zar Oo.pdf",photo:"photos/022_Tin Zar Oo.jpg"},
+  {no:23,name:"Aye Aye Khet",file:"pdfs/023_Aye Aye Khet.pdf",photo:"photos/023_Aye Aye Khet.jpg"},
+  {no:24,name:"Pwint Phyu Khaing",file:"pdfs/024_Pwint Phyu Khaing.pdf",photo:"photos/024_Pwint Phyu Khaing.jpg"},
+  {no:25,name:"Pyae Sandy Kyaw",file:"pdfs/025_Pyae Sandy Kyaw.pdf",photo:"photos/025_Pyae Sandy Kyaw.jpg"},
+  {no:26,name:"Aye Aye Maw",file:"pdfs/026_Aye Aye Maw.pdf",photo:"photos/026_Aye Aye Maw.jpg"},
+  {no:27,name:"Chan Myae Hein",file:"pdfs/027_Chan Myae Hein.pdf",photo:"photos/027_Chan Myae Hein.jpg"},
+  {no:28,name:"R Zar Ni",file:"pdfs/028_ZAR.pdf",photo:"photos/028_ZAR.jpg"},
+  {no:29,name:"Nwe Zin Myint",file:"pdfs/029_Nwe Zin Myint.pdf",photo:"photos/029_Nwe Zin Myint.jpg"},
+  {no:30,name:"Thazin Htwe",file:"pdfs/030_Thazin Htwe.pdf",photo:"photos/030_Thazin Htwe.jpg"},
+  {no:31,name:"Naw Eh May Gay",file:"pdfs/031_Naw Eh May Gay.pdf",photo:"photos/031_Naw Eh May Gay.jpg"},
+  {no:32,name:"Su Mon Thwe",file:"pdfs/032_Su Mon Thwe.pdf",photo:"photos/032_Su Mon Thwe.jpg"},
+  {no:33,name:"Ei Ei Phyo",file:"pdfs/033_Ei Ei Phyo.pdf",photo:"photos/033_Ei Ei Phyo.jpg"},
+  {no:34,name:"Aung Khant Zaw",file:"pdfs/034_Aung.pdf",photo:"photos/034_Aung.jpg"},
+  {no:35,name:"Thurein Pyae Wun",file:"pdfs/035_Thurein Pyae Wun.pdf",photo:"photos/035_Thurein Pyae Wun.jpg"},
+  {no:36,name:"Yan Lin Zaw",file:"pdfs/036_Yan Lin Zaw.pdf",photo:"photos/036_Yan Lin Zaw.jpg"},
+  {no:37,name:"Hay Mhann Lin",file:"pdfs/037_HAY MHANN LIN.pdf",photo:"photos/037_HAY MHANN LIN.jpg"},
+  {no:38,name:"Thet Myat Noe Oo",file:"pdfs/038_Thet Myat Noe Oo.pdf",photo:"photos/038_Thet Myat Noe Oo.jpg"},
+  {no:39,name:"Me Me Zin",file:"pdfs/039_Me Me Zin.pdf",photo:"photos/039_Me Me Zin.jpg"},
+  {no:40,name:"Ye Min Tun",file:"pdfs/040_YeMInTun.pdf",photo:"photos/040_YeMInTun.jpg"},
+  {no:41,name:"Tun Win Naing",file:"pdfs/041_Tun Win Naing.pdf",photo:"photos/041_Tun Win Naing.jpg"},
+  {no:42,name:"Htet Htet Eaint Myat Chel",file:"pdfs/042_HTET HTET EAINT MYAT CHEL.pdf",photo:"photos/042_HTET HTET EAINT MYAT CHEL.jpg"},
+  {no:43,name:"Khin Cho Cho",file:"pdfs/043_KHIN CHO CHO.pdf",photo:"photos/043_KHIN CHO CHO.jpg"},
+  {no:44,name:"Khine Zin Moe",file:"pdfs/044_KHINE ZIN MOE.pdf",photo:"photos/044_KHINE ZIN MOE.jpg"},
+  {no:45,name:"Myat Thazin Htun",file:"pdfs/045_MYAT THAZIN HTUN.pdf",photo:"photos/045_MYAT THAZIN HTUN.jpg"},
+  {no:46,name:"Poe Thandar Tun",file:"pdfs/046_POE THANDAR TUN.pdf",photo:"photos/046_POE THANDAR TUN.jpg"},
+  {no:47,name:"Su Thinzar Win",file:"pdfs/047_SU THINZAR WIN.pdf",photo:"photos/047_SU THINZAR WIN.jpg"},
+  {no:48,name:"Thu Rein Myint Mo Htet Aung",file:"pdfs/048_THU REIN MYINT MO HTET AUNG.pdf",photo:"photos/048_THU REIN MYINT MO HTET AUNG.jpg"},
+  {no:49,name:"Win Moe Kyaw",file:"pdfs/049_WIN MOE KYAW.pdf",photo:"photos/049_WIN MOE KYAW.jpg"},
+  {no:50,name:"Ye Naing Soe",file:"pdfs/050_YE NAING SOE.pdf",photo:"photos/050_YE NAING SOE.jpg"},
+  {no:51,name:"Zar Zar Min",file:"pdfs/051_ZAR ZAR MIN.pdf",photo:"photos/051_ZAR ZAR MIN.jpg"},
+  {no:52,name:"Thet Htar Swe",file:"pdfs/052_Ms.pdf",photo:"photos/052_Ms.jpg"},
+  {no:53,name:"Nang Khin Thu Zar Aung",file:"pdfs/053_Nang Khin Thu Zar Aung.pdf",photo:"photos/053_Nang Khin Thu Zar Aung.jpg"},
+  {no:54,name:"Nyo Nyo Htwe",file:"pdfs/054_Nyo Nyo Htwe.pdf",photo:"photos/054_Nyo Nyo Htwe.jpg"},
+  {no:55,name:"Thu Zar Win",file:"pdfs/055_THU ZAR WIN.pdf",photo:"photos/055_THU ZAR WIN.jpg"},
+  {no:56,name:"Kaung Myat Kyaw",file:"pdfs/056_CV.pdf",photo:"photos/056_CV.jpg"},
+  {no:57,name:"Ei Thiri Kyaw",file:"pdfs/057_EI THIRI KYAW.pdf",photo:"photos/057_EI THIRI KYAW.jpg"},
+  {no:58,name:"Htet Htet",file:"pdfs/058_Htet Htet.pdf",photo:"photos/058_Htet Htet.jpg"},
+  {no:59,name:"Aung Pyae Sone",file:"pdfs/059_Aung Pyae Sone.pdf",photo:"photos/059_Aung Pyae Sone.jpg"},
+  {no:60,name:"Zin Nwe Soe",file:"pdfs/060_Zin Nwe Soe.pdf",photo:"photos/060_Zin Nwe Soe.jpg"},
+  {no:61,name:"Khin Khin Thi",file:"pdfs/061_KHIN KHIN THI.pdf",photo:"photos/061_KHIN KHIN THI.jpg"},
+  {no:62,name:"Thiha Soe",file:"pdfs/062_THIHA.pdf",photo:"photos/062_THIHA.jpg"},
+  {no:63,name:"Khin Khin Thi (2)",file:"pdfs/063_khin Khin Thi cv.pdf",photo:"photos/063_khin Khin Thi cv.jpg"},
+  {no:64,name:"Zin Win Nwe",file:"pdfs/064_Zin Win Nwe.pdf",photo:"photos/064_Zin Win Nwe.jpg"},
+  {no:65,name:"Theint Thinzar Aung",file:"pdfs/065_Theint Thinzar Aung.pdf",photo:"photos/065_Theint Thinzar Aung.jpg"},
+  {no:66,name:"Nay Myo Chan",file:"pdfs/066_Nay Myo Chan.pdf",photo:"photos/066_Nay Myo Chan.jpg"},
+  {no:67,name:"Hay Mann Oo",file:"pdfs/067_Hay Mann Oo.pdf",photo:"photos/067_Hay Mann Oo.jpg"}
 ];
-
-// PDFの右上エリア（顔写真位置）を切り抜いてcanvasに描画
-async function renderFaceThumb(container, pdfUrl) {
-  const loadingEl = container.querySelector('.loading');
-  const placeholderEl = container.querySelector('.placeholder');
-  const cropWrap = container.querySelector('.crop-wrap');
-  try {
-    const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
-    const page = await pdf.getPage(1);
-
-    // まず高解像度でページ全体をレンダリング
-    const scale = 3.0;
-    const viewport = page.getViewport({scale});
-    const fullCanvas = document.createElement('canvas');
-    fullCanvas.width = viewport.width;
-    fullCanvas.height = viewport.height;
-    await page.render({canvasContext: fullCanvas.getContext('2d'), viewport}).promise;
-
-    // 顔写真エリアを切り抜く（右上: x=72%〜97%, y=3%〜28% ）
-    const W = fullCanvas.width;
-    const H = fullCanvas.height;
-    const sx = Math.floor(W * 0.72);
-    const sy = Math.floor(H * 0.03);
-    const sw = Math.floor(W * 0.25);
-    const sh = Math.floor(H * 0.25);
-
-    // 出力用canvas（正方形）
-    const outCanvas = document.createElement('canvas');
-    const outSize = 200;
-    outCanvas.width = outSize;
-    outCanvas.height = outSize;
-    const ctx = outCanvas.getContext('2d');
-    ctx.drawImage(fullCanvas, sx, sy, sw, sh, 0, 0, outSize, outSize);
-
-    loadingEl.style.display = 'none';
-    cropWrap.appendChild(outCanvas);
-    outCanvas.style.width = '100%';
-    outCanvas.style.height = '100%';
-  } catch(e) {
-    loadingEl.style.display = 'none';
-    placeholderEl.style.display = 'block';
-  }
-}
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const container = e.target.querySelector('.card-photo');
-      if (container && container.dataset.src && !container.dataset.loaded) {
-        container.dataset.loaded = '1';
-        renderFaceThumb(container, container.dataset.src);
-        observer.unobserve(e.target);
-      }
-    }
-  });
-}, {rootMargin: '300px'});
-
-function renderCards(list) {
-  const grid = document.getElementById('cardGrid');
-  const noResult = document.getElementById('noResult');
-  if (list.length === 0) {
-    grid.innerHTML = '';
-    noResult.style.display = 'block';
-    return;
-  }
-  noResult.style.display = 'none';
-  grid.innerHTML = list.map(c => `
+function buildCards(list){
+  const grid=document.getElementById('cardGrid');
+  const noResult=document.getElementById('noResult');
+  document.getElementById('totalCount').textContent=list.length;
+  if(list.length===0){grid.innerHTML='';noResult.style.display='block';return;}
+  noResult.style.display='none';
+  grid.innerHTML=list.map(c=>`
     <div class="card">
-      <div class="card-photo" data-src="${c.file}">
-        <div class="crop-wrap"></div>
-        <span class="loading">読み込み中...</span>
-        <span class="placeholder">👤</span>
+      <div class="card-photo">
+        <img src="${c.photo}" alt="${c.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="placeholder" style="display:none">&#128100;</div>
       </div>
       <div class="card-info">
-        <div class="card-no">No. ${String(c.no).padStart(3,'0')}</div>
+        <div class="card-no">No.${String(c.no).padStart(3,'0')}</div>
         <div class="card-name">${c.name}</div>
-        <a class="card-btn" href="${c.file}" target="_blank">📄 履歴書を開く</a>
+        <a class="card-btn" href="${c.file}" target="_blank">&#128196; 履歴書を開く</a>
       </div>
-    </div>
-  `).join('');
-  grid.querySelectorAll('.card').forEach(card => observer.observe(card));
+    </div>`).join('');
 }
-
-function filterCards() {
-  const q = document.getElementById('searchBox').value.toLowerCase();
-  const filtered = q ? candidates.filter(c => c.name.toLowerCase().includes(q)) : candidates;
-  document.getElementById('totalCount').textContent = filtered.length;
-  renderCards(filtered);
+function filterCards(){
+  const q=document.getElementById('searchBox').value.trim().toLowerCase();
+  buildCards(q?candidates.filter(c=>c.name.toLowerCase().includes(q)):candidates);
 }
-
-renderCards(candidates);
+buildCards(candidates);
 </script>
 </body>
 </html>
