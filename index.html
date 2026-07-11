@@ -32,8 +32,16 @@ body{font-family:'Noto Sans JP',sans-serif;background:#f0f4f8;color:#1a1a1a;}
 .card-btn{display:block;text-align:center;background:#0D2B5E;color:#fff;padding:9px;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none;transition:background 0.15s;}
 .card-btn:hover{background:#1a4a8a;}
 .no-result{text-align:center;padding:60px;color:#aaa;font-size:15px;}
+/* ページネーション */
+.pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin:32px 0 16px;}
+.page-info{color:#888;font-size:13px;text-align:center;margin-bottom:8px;}
+.btn-page{background:#fff;border:2px solid #dde3ee;color:#0D2B5E;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.15s;font-family:inherit;}
+.btn-page:hover:not(:disabled){background:#0D2B5E;color:#fff;border-color:#0D2B5E;}
+.btn-page:disabled{opacity:0.35;cursor:default;}
+.btn-page.active{background:#0D2B5E;color:#fff;border-color:#0D2B5E;}
+.page-nums{display:flex;gap:6px;}
 footer{text-align:center;padding:28px;color:#aaa;font-size:12px;}
-@media(max-width:600px){.grid{grid-template-columns:1fr 1fr;}.stat-num{font-size:24px;}}
+@media(max-width:600px){.grid{grid-template-columns:1fr 1fr;}.stat-num{font-size:24px;}.btn-page{padding:8px 12px;font-size:12px;}}
 </style>
 </head>
 <body>
@@ -52,13 +60,16 @@ footer{text-align:center;padding:28px;color:#aaa;font-size:12px;}
     <div style="margin-left:auto;color:#888;font-size:13px;">名前で検索できます 🔍</div>
   </div>
   <div class="search-wrap">
-    <input type="text" id="searchBox" placeholder="🔍　名前で検索（例：Zin、Khin...）" oninput="filterCards()">
+    <input type="text" id="searchBox" placeholder="🔍　名前で検索（例：Zin、Khin...）" oninput="onSearch()">
   </div>
+  <div class="page-info" id="pageInfo"></div>
   <div class="grid" id="cardGrid"></div>
   <div class="no-result" id="noResult" style="display:none;">該当する求職者が見つかりません</div>
+  <div class="pagination" id="pagination"></div>
 </div>
 <footer><p>© 2026 株式会社 NL-DG　|　社内専用ページ</p></footer>
 <script>
+const PER_PAGE = 30;
 const candidates = [
   {no:1,name:"Kyo Tagoo Naing",file:"pdfs/001_Kyo Tagoo Naing.pdf",photo:"photos/001_Kyo Tagoo Naing.jpg"},
   {no:2,name:"Thu Yein Win",file:"pdfs/002_Thu Yein Win.pdf",photo:"photos/002_Thu Yein Win.jpg"},
@@ -126,7 +137,7 @@ const candidates = [
   {no:64,name:"Zin Win Nwe",file:"pdfs/064_Zin Win Nwe.pdf",photo:"photos/064_Zin Win Nwe.jpg"},
   {no:65,name:"Theint Thinzar Aung",file:"pdfs/065_Theint Thinzar Aung.pdf",photo:"photos/065_Theint Thinzar Aung.jpg"},
   {no:66,name:"Nay Myo Chan",file:"pdfs/066_Nay Myo Chan.pdf",photo:"photos/066_Nay Myo Chan.jpg"},
-  {no:67,name:"Hay Mann Oo",file:"pdfs/067_Hay Mann Oo.pdf",photo:"photos/067_Hay Mann Oo.jpg"}
+  {no:67,name:"Hay Mann Oo",file:"pdfs/067_Hay Mann Oo.pdf",photo:"photos/067_Hay Mann Oo.jpg"},
   {no:68,name:"Aung Myo Oo",file:"pdfs/068_Aung Myo Oo.pdf",photo:"photos/068_Aung Myo Oo.jpg"},
   {no:69,name:"La Min Soe",file:"pdfs/069_La Min Soe.pdf",photo:"photos/069_La Min Soe.jpg"},
   {no:70,name:"Phoo Myat Kay Khaing",file:"pdfs/070_Phoo Myat Kay Khaing.pdf",photo:"photos/070_Phoo Myat Kay Khaing.jpg"},
@@ -157,30 +168,85 @@ const candidates = [
   {no:95,name:"Htet Aung Aung",file:"pdfs/095_Htet Aung Aung.pdf",photo:"photos/095_Htet Aung Aung.jpg"},
   {no:96,name:"Win Pyae Pyae Soe",file:"pdfs/096_Win Pyae Pyae Soe.pdf",photo:"photos/096_Win Pyae Pyae Soe.jpg"}
 ];
-function buildCards(list){
-  const grid=document.getElementById('cardGrid');
-  const noResult=document.getElementById('noResult');
-  document.getElementById('totalCount').textContent=list.length;
-  if(list.length===0){grid.innerHTML='';noResult.style.display='block';return;}
-  noResult.style.display='none';
-  grid.innerHTML=list.map(c=>`
-    <div class="card">
-      <div class="card-photo">
-        <img src="${c.photo}" alt="${c.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="placeholder" style="display:none">&#128100;</div>
-      </div>
-      <div class="card-info">
-        <div class="card-no">No.${String(c.no).padStart(3,'0')}</div>
-        <div class="card-name">${c.name}</div>
-        <a class="card-btn" href="${c.file}" target="_blank">&#128196; 履歴書を開く</a>
-      </div>
-    </div>`).join('');
+
+let currentPage = 1;
+let filtered = candidates;
+
+function cardHTML(c) {
+  return `<div class="card">
+    <div class="card-photo">
+      <img src="${c.photo}" alt="${c.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="placeholder" style="display:none">&#128100;</div>
+    </div>
+    <div class="card-info">
+      <div class="card-no">No.${String(c.no).padStart(3,'0')}</div>
+      <div class="card-name">${c.name}</div>
+      <a class="card-btn" href="${c.file}" target="_blank">&#128196; 履歴書を開く</a>
+    </div>
+  </div>`;
 }
-function filterCards(){
-  const q=document.getElementById('searchBox').value.trim().toLowerCase();
-  buildCards(q?candidates.filter(c=>c.name.toLowerCase().includes(q)):candidates);
+
+function buildPagination(total, page) {
+  const totalPages = Math.ceil(total / PER_PAGE);
+  const pag = document.getElementById('pagination');
+  const info = document.getElementById('pageInfo');
+
+  if (totalPages <= 1) { pag.innerHTML = ''; info.textContent = ''; return; }
+
+  const start = (page-1)*PER_PAGE + 1;
+  const end = Math.min(page*PER_PAGE, total);
+  info.textContent = `${start}〜${end}件を表示（全${total}件）`;
+
+  let html = `<button class="btn-page" onclick="goPage(${page-1})" ${page===1?'disabled':''}>&#8249; 前へ</button>`;
+  html += '<div class="page-nums">';
+  for (let i=1; i<=totalPages; i++) {
+    html += `<button class="btn-page ${i===page?'active':''}" onclick="goPage(${i})">${i}</button>`;
+  }
+  html += '</div>';
+  html += `<button class="btn-page" onclick="goPage(${page+1})" ${page===totalPages?'disabled':''}>次へ &#8250;</button>`;
+  pag.innerHTML = html;
 }
-buildCards(candidates);
+
+function render() {
+  const total = filtered.length;
+  const totalPages = Math.ceil(total / PER_PAGE);
+  if (currentPage > totalPages) currentPage = 1;
+
+  const noResult = document.getElementById('noResult');
+  const grid = document.getElementById('cardGrid');
+  document.getElementById('totalCount').textContent = total;
+
+  if (total === 0) {
+    grid.innerHTML = '';
+    noResult.style.display = 'block';
+    document.getElementById('pagination').innerHTML = '';
+    document.getElementById('pageInfo').textContent = '';
+    return;
+  }
+  noResult.style.display = 'none';
+
+  const start = (currentPage-1) * PER_PAGE;
+  const pageItems = filtered.slice(start, start + PER_PAGE);
+  grid.innerHTML = pageItems.map(cardHTML).join('');
+  buildPagination(total, currentPage);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function goPage(p) {
+  const totalPages = Math.ceil(filtered.length / PER_PAGE);
+  if (p < 1 || p > totalPages) return;
+  currentPage = p;
+  render();
+}
+
+function onSearch() {
+  const q = document.getElementById('searchBox').value.trim().toLowerCase();
+  filtered = q ? candidates.filter(c => c.name.toLowerCase().includes(q)) : candidates;
+  currentPage = 1;
+  render();
+}
+
+render();
 </script>
 </body>
 </html>
