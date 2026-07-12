@@ -282,19 +282,19 @@ const deptLabel = {civil:'土木',architecture:'建築',electrical:'電気・電
 
 function cardHTML(c) {
   const dept = c.dept || 'other';
-  const badge = <div class="dept-badge dept-"></div>;
-  return `<div class="card">
-    <div class="card-photo">
-      <img src="${c.photo}" alt="${c.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="placeholder" style="display:none">&#128100;</div>
-    </div>
-    <div class="card-info">
-      
-      <div class="card-no">No.${String(c.no).padStart(3,'0')}</div>
-      <div class="card-name">${c.name}</div>
-      <a class="card-btn" href="${c.file}" target="_blank">&#128196; 履歴書を開く</a>
-    </div>
-  </div>`;
+  const label = deptLabel[dept] || 'その他';
+  const badge = '<div class="dept-badge dept-' + dept + '">' + label + '</div>';
+  return '<div class="card">'
+    + '<div class="card-photo">'
+    + '<img src="' + c.photo + '" alt="' + c.name + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+    + '<div class="placeholder" style="display:none">&#128100;</div>'
+    + '</div>'
+    + '<div class="card-info">'
+    + badge
+    + '<div class="card-no">No.' + String(c.no).padStart(3,'0') + '</div>'
+    + '<div class="card-name">' + c.name + '</div>'
+    + '<a class="card-btn" href="' + c.file + '" target="_blank">&#128196; 履歴書を開く</a>'
+    + '</div></div>';
 }
 
 function buildPagination(total, page) {
