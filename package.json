@@ -1,0 +1,1 @@
+{"name":"nldg-cv-tools","version":"1.0.0","private":true,"dependencies":{"pdf2pic":"^3.2.0","pdfjs-dist":"^6.1.200"}}

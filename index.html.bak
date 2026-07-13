@@ -1,0 +1,366 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"><meta name="build" content="20260712-1904">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NL-DG 求職者リスト</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans JP',sans-serif;background:#f0f4f8;color:#1a1a1a;}
+.header{background:#0D2B5E;padding:20px 0;}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;}
+.logo{color:#fff;font-size:20px;font-weight:700;}
+.logo span{color:#C9A84C;}
+.header-sub{color:rgba(255,255,255,0.5);font-size:13px;}
+.wrap{max-width:1100px;margin:0 auto;padding:32px 24px;}
+.stats{background:#fff;border-radius:12px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;gap:24px;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.stat-num{font-size:32px;font-weight:700;color:#0D2B5E;}
+.stat-label{font-size:12px;color:#888;margin-top:2px;}
+.search-wrap{margin-bottom:24px;}
+.search-wrap input{width:100%;padding:14px 18px;border:2px solid #dde3ee;border-radius:10px;font-size:15px;font-family:inherit;outline:none;transition:border-color 0.2s;}
+.search-wrap input:focus{border-color:#0D2B5E;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.07);overflow:hidden;transition:transform 0.15s,box-shadow 0.15s;}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.13);}
+.card-photo{width:100%;aspect-ratio:1/1;background:#eef2f8;overflow:hidden;position:relative;}
+.card-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+.card-photo .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:56px;color:#c5d4ea;position:absolute;top:0;left:0;}
+.card-info{padding:14px 16px;}
+.card-no{font-size:10px;font-weight:700;color:#C9A84C;letter-spacing:2px;margin-bottom:4px;}
+.card-name{font-size:14px;font-weight:700;color:#0D2B5E;margin-bottom:12px;line-height:1.4;}
+.card-btn{display:block;text-align:center;background:#0D2B5E;color:#fff;padding:9px;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none;transition:background 0.15s;}
+.card-btn:hover{background:#1a4a8a;}
+
+.filter-wrap{margin-bottom:20px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.filter-label{font-size:13px;color:#888;margin-right:4px;}
+.btn-filter{background:#fff;border:2px solid #dde3ee;color:#555;padding:8px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.15s;font-family:inherit;}
+.btn-filter:hover{border-color:#0D2B5E;color:#0D2B5E;}
+.btn-filter.active{background:#0D2B5E;color:#fff;border-color:#0D2B5E;}
+.dept-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-bottom:6px;letter-spacing:0.5px;}
+.dept-civil{background:#e8f4fd;color:#1565c0;}
+.dept-architecture{background:#fff3e0;color:#e65100;}
+.dept-electrical{background:#fce4ec;color:#c62828;}
+.dept-mechanical{background:#e8f5e9;color:#2e7d32;}
+.dept-it{background:#ede7f6;color:#4527a0;}
+.dept-other{background:#f5f5f5;color:#757575;}
+.no-result{text-align:center;padding:60px;color:#aaa;font-size:15px;}
+/* ページネーション */
+.pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin:32px 0 16px;}
+.page-info{color:#888;font-size:13px;text-align:center;margin-bottom:8px;}
+.btn-page{background:#fff;border:2px solid #dde3ee;color:#0D2B5E;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.15s;font-family:inherit;}
+.btn-page:hover:not(:disabled){background:#0D2B5E;color:#fff;border-color:#0D2B5E;}
+.btn-page:disabled{opacity:0.35;cursor:default;}
+.btn-page.active{background:#0D2B5E;color:#fff;border-color:#0D2B5E;}
+.page-nums{display:flex;gap:6px;}
+footer{text-align:center;padding:28px;color:#aaa;font-size:12px;}
+@media(max-width:600px){.grid{grid-template-columns:1fr 1fr;}.stat-num{font-size:24px;}.btn-page{padding:8px 12px;font-size:12px;}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <div>
+      <div class="logo">株式会社 <span>NL-DG</span>　求職者データベース</div>
+      <div class="header-sub" style="margin-top:6px;">最終更新：2026年07月12日　｜　本日：2026年07月11日</div>
+    </div>
+    <div class="header-sub">社内専用ページ</div>
+  </div>
+</header>
+<div class="wrap">
+  <div class="stats">
+    <div>
+      <div class="stat-num" id="totalCount">169</div>
+      <div class="stat-label">登録求職者数</div>
+    </div>
+    <div style="margin-left:auto;color:#888;font-size:13px;">名前で検索できます 🔍</div>
+  </div>
+  <div class="search-wrap">
+    <input type="text" id="searchBox" placeholder="🔍　名前で検索（例：Zin、Khin...）" oninput="onSearch()">
+  </div>
+  <div class="filter-wrap">
+    <span class="filter-label">学科：</span>
+    <button class="btn-filter active" onclick="setFilter('all')">すべて</button>
+    <button class="btn-filter" onclick="setFilter('civil')">🏗 土木</button>
+    <button class="btn-filter" onclick="setFilter('architecture')">🏛 建築</button>
+    <button class="btn-filter" onclick="setFilter('electrical')">⚡ 電気・電子</button>
+    <button class="btn-filter" onclick="setFilter('mechanical')">⚙️ 機械</button>
+    <button class="btn-filter" onclick="setFilter('it')">💻 IT・情報</button>
+    <button class="btn-filter" onclick="setFilter('other')">📚 その他</button>
+  </div>
+  <div class="page-info" id="pageInfo"></div>
+  <div class="grid" id="cardGrid"></div>
+  <div class="no-result" id="noResult" style="display:none;">該当する求職者が見つかりません</div>
+  <div class="pagination" id="pagination"></div>
+</div>
+<footer><p><!-- build:20260711-2256 --> © 2026 株式会社 NL-DG　|　社内専用ページ</p></footer>
+<script>
+const PER_PAGE = 30;
+const candidates = [
+  {no:1,name:"Kyo Tagoo Naing",file:"pdfs/001_Kyo Tagoo Naing.pdf",photo:"photos/001_Kyo Tagoo Naing.jpg",dept:"other"},
+  {no:2,name:"Thu Yein Win",file:"pdfs/002_Thu Yein Win.pdf",photo:"photos/002_Thu Yein Win.jpg",dept:"civil"},
+  {no:3,name:"Htet Myat Win",file:"pdfs/003_htet.pdf",photo:"photos/003_htet.jpg",dept:"electrical"},
+  {no:4,name:"Wai Yan Tun",file:"pdfs/004_Wai Yan Tun.pdf",photo:"photos/004_Wai Yan Tun.jpg",dept:"civil"},
+  {no:5,name:"Ohnmar Thet",file:"pdfs/005_OHNMAR THET.pdf",photo:"photos/005_OHNMAR THET.jpg",dept:"civil"},
+  {no:6,name:"Kyaw Kyaw Min",file:"pdfs/006_Kyaw.pdf",photo:"photos/006_Kyaw.jpg",dept:"architecture"},
+  {no:7,name:"Theint Nandar Soe",file:"pdfs/007_Theint.pdf",photo:"photos/007_Theint.jpg",dept:"civil"},
+  {no:8,name:"Hsu Mon Aung",file:"pdfs/008_Hsu Mon Aung.pdf",photo:"photos/008_Hsu Mon Aung.jpg",dept:"civil"},
+  {no:9,name:"Han Ni Su San",file:"pdfs/009_Han Ni Su San.pdf",photo:"photos/009_Han Ni Su San.jpg",dept:"civil"},
+  {no:10,name:"Ku Ku Myat",file:"pdfs/010_Ku Ku Myat.pdf",photo:"photos/010_Ku Ku Myat.jpg",dept:"other"},
+  {no:11,name:"Thwe Mon Oo",file:"pdfs/011_Thwe Mon Oo.pdf",photo:"photos/011_Thwe Mon Oo.jpg",dept:"civil"},
+  {no:12,name:"Su Lai Nadi",file:"pdfs/012_Su Lai Nadi.pdf",photo:"photos/012_Su Lai Nadi.jpg",dept:"civil"},
+  {no:13,name:"Su Wai Phyoe",file:"pdfs/013_Su Wai Phyoe.pdf",photo:"photos/013_Su Wai Phyoe.jpg",dept:"civil"},
+  {no:14,name:"Htet Hmu Swe",file:"pdfs/014_Htet Hmu Swe.pdf",photo:"photos/014_Htet Hmu Swe.jpg",dept:"civil"},
+  {no:15,name:"Phyu Phyu Zin",file:"pdfs/015_Phyu Phyu Zin.pdf",photo:"photos/015_Phyu Phyu Zin.jpg",dept:"architecture"},
+  {no:16,name:"Win Shwe Yee Nwe",file:"pdfs/016_Win Shwe Yee Nwe.pdf",photo:"photos/016_Win Shwe Yee Nwe.jpg",dept:"civil"},
+  {no:17,name:"Wai Wai Lwin",file:"pdfs/017_Wai Wai Lwin.pdf",photo:"photos/017_Wai Wai Lwin.jpg",dept:"civil"},
+  {no:18,name:"Mya Thu Zar",file:"pdfs/018_Mya Thu Zar.pdf",photo:"photos/018_Mya Thu Zar.jpg",dept:"civil"},
+  {no:19,name:"Wai Mon Kyaw",file:"pdfs/019_Wai Mon Kyaw.pdf",photo:"photos/019_Wai Mon Kyaw.jpg",dept:"civil"},
+  {no:20,name:"Zezawah Soe",file:"pdfs/020_Zezawah Soe.pdf",photo:"photos/020_Zezawah Soe.jpg",dept:"civil"},
+  {no:21,name:"Shwin Lai Tun",file:"pdfs/021_Shwin Lai Tun.pdf",photo:"photos/021_Shwin Lai Tun.jpg",dept:"civil"},
+  {no:22,name:"Tin Zar Oo",file:"pdfs/022_Tin Zar Oo.pdf",photo:"photos/022_Tin Zar Oo.jpg",dept:"civil"},
+  {no:23,name:"Aye Aye Khet",file:"pdfs/023_Aye Aye Khet.pdf",photo:"photos/023_Aye Aye Khet.jpg",dept:"electrical"},
+  {no:24,name:"Pwint Phyu Khaing",file:"pdfs/024_Pwint Phyu Khaing.pdf",photo:"photos/024_Pwint Phyu Khaing.jpg",dept:"civil"},
+  {no:25,name:"Pyae Sandy Kyaw",file:"pdfs/025_Pyae Sandy Kyaw.pdf",photo:"photos/025_Pyae Sandy Kyaw.jpg",dept:"electrical"},
+  {no:26,name:"Aye Aye Maw",file:"pdfs/026_Aye Aye Maw.pdf",photo:"photos/026_Aye Aye Maw.jpg",dept:"architecture"},
+  {no:27,name:"Chan Myae Hein",file:"pdfs/027_Chan Myae Hein.pdf",photo:"photos/027_Chan Myae Hein.jpg",dept:"civil"},
+  {no:28,name:"R Zar Ni",file:"pdfs/028_ZAR.pdf",photo:"photos/028_ZAR.jpg",dept:"civil"},
+  {no:29,name:"Nwe Zin Myint",file:"pdfs/029_Nwe Zin Myint.pdf",photo:"photos/029_Nwe Zin Myint.jpg",dept:"civil"},
+  {no:30,name:"Thazin Htwe",file:"pdfs/030_Thazin Htwe.pdf",photo:"photos/030_Thazin Htwe.jpg",dept:"civil"},
+  {no:31,name:"Naw Eh May Gay",file:"pdfs/031_Naw Eh May Gay.pdf",photo:"photos/031_Naw Eh May Gay.jpg",dept:"architecture"},
+  {no:32,name:"Su Mon Thwe",file:"pdfs/032_Su Mon Thwe.pdf",photo:"photos/032_Su Mon Thwe.jpg",dept:"architecture"},
+  {no:33,name:"Ei Ei Phyo",file:"pdfs/033_Ei Ei Phyo.pdf",photo:"photos/033_Ei Ei Phyo.jpg",dept:"architecture"},
+  {no:34,name:"Aung Khant Zaw",file:"pdfs/034_Aung.pdf",photo:"photos/034_face.jpg?v=20260711225000",dept:"civil"},
+  {no:35,name:"Thurein Pyae Wun",file:"pdfs/035_Thurein Pyae Wun.pdf",photo:"photos/035_Thurein Pyae Wun.jpg",dept:"mechanical"},
+  {no:36,name:"Yan Lin Zaw",file:"pdfs/036_Yan Lin Zaw.pdf",photo:"photos/036_Yan Lin Zaw.jpg",dept:"electrical"},
+  {no:37,name:"Hay Mhann Lin",file:"pdfs/037_HAY MHANN LIN.pdf",photo:"photos/037_HAY MHANN LIN.jpg",dept:"electrical"},
+  {no:38,name:"Thet Myat Noe Oo",file:"pdfs/038_Thet Myat Noe Oo.pdf",photo:"photos/038_Thet Myat Noe Oo.jpg",dept:"civil"},
+  {no:39,name:"Me Me Zin",file:"pdfs/039_Me Me Zin.pdf",photo:"photos/039_Me Me Zin.jpg",dept:"civil"},
+  {no:40,name:"Ye Min Tun",file:"pdfs/040_YeMInTun.pdf",photo:"photos/040_YeMInTun.jpg",dept:"civil"},
+  {no:41,name:"Tun Win Naing",file:"pdfs/041_Tun Win Naing.pdf",photo:"photos/041_Tun Win Naing.jpg",dept:"civil"},
+  {no:42,name:"Htet Htet Eaint Myat Chel",file:"pdfs/042_HTET HTET EAINT MYAT CHEL.pdf",photo:"photos/042_HTET HTET EAINT MYAT CHEL.jpg",dept:"civil"},
+  {no:43,name:"Khin Cho Cho",file:"pdfs/043_KHIN CHO CHO.pdf",photo:"photos/043_KHIN CHO CHO.jpg",dept:"civil"},
+  {no:44,name:"Khine Zin Moe",file:"pdfs/044_KHINE ZIN MOE.pdf",photo:"photos/044_KHINE ZIN MOE.jpg",dept:"civil"},
+  {no:45,name:"Myat Thazin Htun",file:"pdfs/045_MYAT THAZIN HTUN.pdf",photo:"photos/045_MYAT THAZIN HTUN.jpg",dept:"civil"},
+  {no:46,name:"Poe Thandar Tun",file:"pdfs/046_POE THANDAR TUN.pdf",photo:"photos/046_POE THANDAR TUN.jpg",dept:"civil"},
+  {no:47,name:"Su Thinzar Win",file:"pdfs/047_SU THINZAR WIN.pdf",photo:"photos/047_SU THINZAR WIN.jpg",dept:"architecture"},
+  {no:48,name:"Thu Rein Myint Mo Htet Aung",file:"pdfs/048_THU REIN MYINT MO HTET AUNG.pdf",photo:"photos/048_THU REIN MYINT MO HTET AUNG.jpg",dept:"civil"},
+  {no:49,name:"Win Moe Kyaw",file:"pdfs/049_WIN MOE KYAW.pdf",photo:"photos/049_WIN MOE KYAW.jpg",dept:"architecture"},
+  {no:50,name:"Ye Naing Soe",file:"pdfs/050_YE NAING SOE.pdf",photo:"photos/050_YE NAING SOE.jpg",dept:"civil"},
+  {no:51,name:"Zar Zar Min",file:"pdfs/051_ZAR ZAR MIN.pdf",photo:"photos/051_ZAR ZAR MIN.jpg",dept:"mechanical"},
+  {no:52,name:"Thet Htar Swe",file:"pdfs/052_Ms.pdf",photo:"photos/052_Ms.jpg",dept:"civil"},
+  {no:53,name:"Nang Khin Thu Zar Aung",file:"pdfs/053_Nang Khin Thu Zar Aung.pdf",photo:"photos/053_Nang Khin Thu Zar Aung.jpg",dept:"electrical"},
+  {no:54,name:"Nyo Nyo Htwe",file:"pdfs/054_Nyo Nyo Htwe.pdf",photo:"photos/054_Nyo Nyo Htwe.jpg",dept:"civil"},
+  {no:55,name:"Thu Zar Win",file:"pdfs/055_THU ZAR WIN.pdf",photo:"photos/055_THU ZAR WIN.jpg",dept:"civil"},
+  {no:56,name:"Kaung Myat Kyaw",file:"pdfs/056_CV.pdf",photo:"photos/056_CV.jpg",dept:"other"},
+  {no:57,name:"Ei Thiri Kyaw",file:"pdfs/057_EI THIRI KYAW.pdf",photo:"photos/057_EI THIRI KYAW.jpg",dept:"civil"},
+  {no:58,name:"Htet Htet",file:"pdfs/058_Htet Htet.pdf",photo:"photos/058_Htet Htet.jpg",dept:"civil"},
+  {no:59,name:"Aung Pyae Sone",file:"pdfs/059_Aung Pyae Sone.pdf",photo:"photos/059_Aung Pyae Sone.jpg",dept:"architecture"},
+  {no:60,name:"Zin Nwe Soe",file:"pdfs/060_Zin Nwe Soe.pdf",photo:"photos/060_Zin Nwe Soe.jpg",dept:"mechanical"},
+  {no:61,name:"Khin Khin Thi",file:"pdfs/061_KHIN KHIN THI.pdf",photo:"photos/061_KHIN KHIN THI.jpg",dept:"other"},
+  {no:62,name:"Thiha Soe",file:"pdfs/062_THIHA.pdf",photo:"photos/062_THIHA.jpg",dept:"civil"},
+  {no:63,name:"Khin Khin Thi (2)",file:"pdfs/063_khin Khin Thi cv.pdf",photo:"photos/063_khin Khin Thi cv.jpg",dept:"other"},
+  {no:64,name:"Zin Win Nwe",file:"pdfs/064_Zin Win Nwe.pdf",photo:"photos/064_Zin Win Nwe.jpg",dept:"civil"},
+  {no:65,name:"Theint Thinzar Aung",file:"pdfs/065_Theint Thinzar Aung.pdf",photo:"photos/065_Theint Thinzar Aung.jpg",dept:"civil"},
+  {no:66,name:"Nay Myo Chan",file:"pdfs/066_Nay Myo Chan.pdf",photo:"photos/066_Nay Myo Chan.jpg",dept:"civil"},
+  {no:67,name:"Hay Mann Oo",file:"pdfs/067_Hay Mann Oo.pdf",photo:"photos/067_Hay Mann Oo.jpg",dept:"civil"},
+  {no:68,name:"Aung Myo Oo",file:"pdfs/068_Aung Myo Oo.pdf",photo:"photos/068_Aung Myo Oo.jpg",dept:"other"},
+  {no:69,name:"La Min Soe",file:"pdfs/069_La Min Soe.pdf",photo:"photos/069_La Min Soe.jpg",dept:"other"},
+  {no:70,name:"Phoo Myat Kay Khaing",file:"pdfs/070_Phoo Myat Kay Khaing.pdf",photo:"photos/070_Phoo Myat Kay Khaing.jpg",dept:"other"},
+  {no:71,name:"Si Thu Min Htet",file:"pdfs/071_Si Thu Min Htet.pdf",photo:"photos/071_Si Thu Min Htet.jpg",dept:"other"},
+  {no:72,name:"Swan Gone Yee",file:"pdfs/072_Swan Gone Yee.pdf",photo:"photos/072_Swan Gone Yee.jpg",dept:"other"},
+  {no:73,name:"Tin Nilar Myo",file:"pdfs/073_Tin Nilar Myo.pdf",photo:"photos/073_Tin Nilar Myo.jpg",dept:"other"},
+  {no:74,name:"Zin Min Htet",file:"pdfs/074_Zin Min Htet.pdf",photo:"photos/074_Zin Min Htet.jpg",dept:"other"},
+  {no:75,name:"Aye Phyo Han",file:"pdfs/075_Aye Phyo Han.pdf",photo:"photos/075_Aye Phyo Han.jpg",dept:"electrical"},
+  {no:76,name:"Ei Mon Mon Kyaw",file:"pdfs/076_Ei Mon Mon Kyaw.pdf",photo:"photos/076_Ei Mon Mon Kyaw.jpg",dept:"civil"},
+  {no:77,name:"Kay Zin Soe",file:"pdfs/077_Kay Zin Soe.pdf",photo:"photos/077_Kay Zin Soe.jpg",dept:"civil"},
+  {no:78,name:"Kyaw Thu Tun",file:"pdfs/078_Kyaw Thu Tun.pdf",photo:"photos/078_Kyaw Thu Tun.jpg",dept:"civil"},
+  {no:79,name:"Thet Ngon Phoo",file:"pdfs/079_Thet Ngon Phoo.pdf",photo:"photos/079_Thet Ngon Phoo.jpg",dept:"civil"},
+  {no:80,name:"July Moe Oo",file:"pdfs/080_July Moe Oo.pdf",photo:"photos/080_July Moe Oo.jpg",dept:"electrical"},
+  {no:81,name:"Tin Tin Hlaing",file:"pdfs/081_Tin Tin Hlaing.pdf",photo:"photos/081_Tin Tin Hlaing.jpg",dept:"civil"},
+  {no:82,name:"Hnin Wyut Yi Win",file:"pdfs/082_Hnin Wyut Yi Win.pdf",photo:"photos/082_Hnin Wyut Yi Win.jpg",dept:"civil"},
+  {no:83,name:"Hnin Nu Nu Aung",file:"pdfs/083_Hnin Nu Nu Aung.pdf",photo:"photos/083_Hnin Nu Nu Aung.jpg",dept:"civil"},
+  {no:84,name:"Thandar May Oo",file:"pdfs/084_Thandar May Oo.pdf",photo:"photos/084_Thandar May Oo.jpg",dept:"architecture"},
+  {no:85,name:"Phyu Thae Wai",file:"pdfs/085_Phyu Thae Wai.pdf",photo:"photos/085_Phyu Thae Wai.jpg",dept:"civil"},
+  {no:86,name:"Wai Wai Aung",file:"pdfs/086_Wai Wai Aung.pdf",photo:"photos/086_Wai Wai Aung.jpg",dept:"mechanical"},
+  {no:87,name:"Ei Ei Khaing",file:"pdfs/087_Ei Ei Khaing.pdf",photo:"photos/087_Ei Ei Khaing.jpg",dept:"civil"},
+  {no:88,name:"Win Lalyar Paing",file:"pdfs/088_Win Lalyar Paing.pdf",photo:"photos/088_Win Lalyar Paing.jpg",dept:"civil"},
+  {no:89,name:"Wai Zin Ko",file:"pdfs/089_Wai Zin Ko.pdf",photo:"photos/089_Wai Zin Ko.jpg",dept:"civil"},
+  {no:90,name:"Ei Thinzar Oo",file:"pdfs/090_Ei Thinzar Oo.pdf",photo:"photos/090_Ei Thinzar Oo.jpg",dept:"civil"},
+  {no:91,name:"Jue Jue Khin",file:"pdfs/091_Jue Jue Khin.pdf",photo:"photos/091_Jue Jue Khin.jpg",dept:"civil"},
+  {no:92,name:"Maung Thant",file:"pdfs/092_Maung Thant.pdf",photo:"photos/092_Maung Thant.jpg",dept:"civil"},
+  {no:93,name:"Aung Nyein",file:"pdfs/093_Aung Nyein.pdf",photo:"photos/093_Aung Nyein.jpg",dept:"civil"},
+  {no:94,name:"Zin Thu Win",file:"pdfs/094_Zin Thu Win.pdf",photo:"photos/094_Zin Thu Win.jpg",dept:"civil"},
+  {no:95,name:"Htet Aung Aung",file:"pdfs/095_Htet Aung Aung.pdf",photo:"photos/095_Htet Aung Aung.jpg",dept:"other"},
+  {no:96,name:"Win Pyae Pyae Soe",file:"pdfs/096_Win Pyae Pyae Soe.pdf",photo:"photos/096_Win Pyae Pyae Soe.jpg",dept:"architecture"},
+  {no:97,name:"Hsuzar Moe Thu",file:"pdfs/097_Hsuzar Moe Thu.pdf",photo:"photos/097_Hsuzar Moe Thu.jpg",dept:"civil"},
+  {no:98,name:"Han Zay Soe",file:"pdfs/098_Han Zay Soe.pdf",photo:"photos/098_Han Zay Soe.jpg",dept:"civil"},
+  {no:99,name:"Than Zin Yadanar",file:"pdfs/099_Than Zin Yadanar.pdf",photo:"photos/099_Than Zin Yadanar.jpg",dept:"civil"},
+  {no:100,name:"Cherry Zaw",file:"pdfs/100_Cherry Zaw.pdf",photo:"photos/100_Cherry Zaw.jpg",dept:"civil"},
+  {no:101,name:"San San Htay",file:"pdfs/101_San San Htay.pdf",photo:"photos/101_San San Htay.jpg",dept:"civil"},
+  {no:102,name:"May Thu Kyaw",file:"pdfs/102_May Thu Kyaw.pdf",photo:"photos/102_May Thu Kyaw.jpg",dept:"civil"},
+  {no:103,name:"Su Yin Nwe Htun",file:"pdfs/103_Su Yin Nwe Htun.pdf",photo:"photos/103_Su Yin Nwe Htun.jpg",dept:"civil"},
+  {no:104,name:"Thi Thi Soe",file:"pdfs/104_Thi Thi Soe.pdf",photo:"photos/104_Thi Thi Soe.jpg",dept:"civil"},
+  {no:105,name:"Khin Yadanar Oo",file:"pdfs/105_Khin Yadanar Oo.pdf",photo:"photos/105_Khin Yadanar Oo.jpg",dept:"civil"},
+  {no:106,name:"Thazin Phyo Wai",file:"pdfs/106_Thazin Phyo Wai.pdf",photo:"photos/106_Thazin Phyo Wai.jpg",dept:"electrical"},
+  {no:107,name:"Thet Htoo Zan",file:"pdfs/107_Thet Htoo Zan.pdf",photo:"photos/107_Thet Htoo Zan.jpg",dept:"civil"},
+  {no:108,name:"Kyaw Naing Min Htet",file:"pdfs/108_Kyaw Naing Min Htet.pdf",photo:"photos/108_Kyaw Naing Min Htet.jpg",dept:"civil"},
+  {no:109,name:"Naing Htun Oo",file:"pdfs/109_Naing Htun Oo.pdf",photo:"photos/109_Naing Htun Oo.jpg",dept:"civil"},
+  {no:110,name:"Kyaw Thu Ya",file:"pdfs/110_Kyaw Thu Ya.pdf",photo:"photos/110_Kyaw Thu Ya.jpg",dept:"civil"},
+  {no:111,name:"Htet Htet Aung",file:"pdfs/111_Htet Htet Aung.pdf",photo:"photos/111_Htet Htet Aung.jpg",dept:"electrical"},
+  {no:112,name:"Phyo Min Thant",file:"pdfs/112_Phyo Min Thant.pdf",photo:"photos/112_Phyo Min Thant.jpg",dept:"mechanical"},
+  {no:113,name:"Hnin Myat Moe",file:"pdfs/113_Hnin Myat Moe.pdf",photo:"photos/113_Hnin Myat Moe.jpg",dept:"civil"},
+  {no:114,name:"Myo Myat Sandar",file:"pdfs/114_Myo Myat Sandar.pdf",photo:"photos/114_Myo Myat Sandar.jpg",dept:"civil"},
+  {no:115,name:"Pyae Phyo Ko Ko",file:"pdfs/115_Pyae Phyo Ko Ko.pdf",photo:"photos/115_Pyae Phyo Ko Ko.jpg",dept:"other"},
+  {no:116,name:"Zaw Latt Tun",file:"pdfs/116_Zaw Latt Tun.pdf",photo:"photos/116_Zaw Latt Tun.jpg",dept:"civil"},
+  {no:117,name:"Aye Aye Mar",file:"pdfs/117_Aye Aye Mar.pdf",photo:"photos/117_Aye Aye Mar.jpg",dept:"civil"},
+  {no:118,name:"Shwe Wuit Yee Oo",file:"pdfs/118_Shwe Wuit Yee Oo.pdf",photo:"photos/118_Shwe Wuit Yee Oo.jpg",dept:"mechanical"},
+  {no:119,name:"Hlaing Bwar Aung",file:"pdfs/119_Hlaing Bwar Aung.pdf",photo:"photos/119_Hlaing Bwar Aung.jpg",dept:"other"},
+  {no:120,name:"Aye Chan Paing",file:"pdfs/120_Aye Chan Paing.pdf",photo:"photos/120_Aye Chan Paing.jpg",dept:"electrical"},
+  {no:121,name:"Khine Zin Zin Oo",file:"pdfs/121_Khine Zin Zin Oo.pdf",photo:"photos/121_Khine Zin Zin Oo.jpg",dept:"architecture"},
+  {no:122,name:"Phyu Sin Thaw",file:"pdfs/122_Phyu Sin Thaw.pdf",photo:"photos/122_Phyu Sin Thaw.jpg",dept:"electrical"},
+  {no:123,name:"Soe Nyi Nyi Htut",file:"pdfs/123_Soe Nyi Nyi Htut.pdf",photo:"photos/123_Soe Nyi Nyi Htut.jpg",dept:"electrical"},
+  {no:124,name:"Wai Yan Naing",file:"pdfs/124_Wai Yan Naing.pdf",photo:"photos/124_Wai Yan Naing.jpg",dept:"civil"},
+  {no:125,name:"Nadi Oo",file:"pdfs/125_Nadi Oo.pdf",photo:"photos/125_Nadi Oo.jpg",dept:"civil"},
+  {no:126,name:"Hnin Wai Moe",file:"pdfs/126_Hnin Wai Moe.pdf",photo:"photos/126_Hnin Wai Moe.jpg",dept:"civil"},
+  {no:127,name:"Ei Mon Lwin",file:"pdfs/127_Ei Mon Lwin.pdf",photo:"photos/127_Ei Mon Lwin.jpg",dept:"civil"},
+  {no:128,name:"Nyein Wut Yi Kyaw",file:"pdfs/128_Nyein Wut Yi Kyaw.pdf",photo:"photos/128_Nyein Wut Yi Kyaw.jpg",dept:"civil"},
+  {no:129,name:"Thandar Myo Thet Htun",file:"pdfs/129_Thandar Myo Thet Htun.pdf",photo:"photos/129_Thandar Myo Thet Htun.jpg",dept:"civil"},
+  {no:130,name:"Su Thet Oo",file:"pdfs/130_Su Thet Oo.pdf",photo:"photos/130_Su Thet Oo.jpg",dept:"civil"},
+  {no:131,name:"Myo Thiri Kyaw",file:"pdfs/131_Myo Thiri Kyaw.pdf",photo:"photos/131_Myo Thiri Kyaw.jpg",dept:"civil"},
+  {no:132,name:"Chan Nyein Htun",file:"pdfs/132_Chan Nyein Htun.pdf",photo:"photos/132_Chan Nyein Htun.jpg",dept:"civil"},
+  {no:133,name:"Ei Ei Khin",file:"pdfs/133_Ei Ei Khin.pdf",photo:"photos/133_Ei Ei Khin.jpg",dept:"civil"},
+  {no:134,name:"Hnin Aye Yin",file:"pdfs/134_Hnin Aye Yin.pdf",photo:"photos/134_Hnin Aye Yin.jpg",dept:"civil"},
+  {no:135,name:"Hnin Kay Khine Aung",file:"pdfs/135_Hnin Kay Khine Aung.pdf",photo:"photos/135_Hnin Kay Khine Aung.jpg",dept:"electrical"},
+  {no:136,name:"Mi Mi Kyaw",file:"pdfs/136_Mi Mi Kyaw.pdf",photo:"photos/136_Mi Mi Kyaw.jpg",dept:"civil"},
+  {no:137,name:"Poe Ei Naing",file:"pdfs/137_Poe Ei Naing.pdf",photo:"photos/137_Poe Ei Naing.jpg",dept:"civil"},
+  {no:138,name:"Yamone Myint Myat Htoo",file:"pdfs/138_Yamone Myint Myat Htoo.pdf",photo:"photos/138_face.jpg",dept:"civil"},
+  {no:139,name:"Mi Mi Shin",file:"pdfs/139_Mi Mi Shin.pdf",photo:"photos/139_Mi Mi Shin.jpg?v=fix2",dept:"civil"},
+  {no:140,name:"Nay Lin Oo",file:"pdfs/140_Nay Lin Oo.pdf",photo:"photos/140_Nay Lin Oo.jpg",dept:"mechanical"},
+  {no:141,name:"Zin Mar Phyo",file:"pdfs/141_Zin Mar Phyo.pdf",photo:"photos/141_Zin Mar Phyo.jpg",dept:"civil"},
+  {no:142,name:"Cho Cho Win",file:"pdfs/142_Cho Cho Win.pdf",photo:"photos/142_Cho Cho Win.jpg",dept:"civil"},
+  {no:143,name:"Aye Kitt Kitt Khaing",file:"pdfs/143_Aye Kitt Kitt Khaing.pdf",photo:"photos/143_Aye Kitt Kitt Khaing.jpg",dept:"electrical"},
+  {no:144,name:"Khin Yadanar Soe",file:"pdfs/144_Khin Yadanar Soe.pdf",photo:"photos/144_Khin Yadanar Soe.jpg",dept:"it"},
+  {no:145,name:"Nandar Khaing",file:"pdfs/145_Nandar Khaing.pdf",photo:"photos/145_Nandar Khaing.jpg",dept:"electrical"},
+  {no:146,name:"Thet Hmue Wai",file:"pdfs/146_Thet Hmue Wai.pdf",photo:"photos/146_Thet Hmue Wai.jpg",dept:"architecture"},
+  {no:147,name:"Ei Chit Phoo",file:"pdfs/147_Ei Chit Phoo.pdf",photo:"photos/147_Ei Chit Phoo.jpg",dept:"civil"},
+  {no:148,name:"Ei Hnin Phyu",file:"pdfs/148_Ei Hnin Phyu.pdf",photo:"photos/148_Ei Hnin Phyu.jpg",dept:"electrical"},
+  {no:149,name:"Min Min Moe Khaing",file:"pdfs/149_Min Min Moe Khaing.pdf",photo:"photos/149_Min Min Moe Khaing.jpg",dept:"electrical"},
+  {no:150,name:"Hnin Mhon Phoo",file:"pdfs/150_Hnin Mhon Phoo.pdf",photo:"photos/150_Hnin Mhon Phoo.jpg",dept:"electrical"},
+  {no:151,name:"Wai Wai Myint Thein",file:"pdfs/151_Wai Wai Myint Thein.pdf",photo:"photos/151_Wai Wai Myint Thein.jpg",dept:"electrical"},
+  {no:152,name:"Khaing Zin Lin",file:"pdfs/152_Khaing Zin Lin.pdf",photo:"photos/152_Khaing Zin Lin.jpg?v=2",dept:"mechanical"},
+  {no:153,name:"Hnin Ei Phyu",file:"pdfs/153_Hnin Ei Phyu.pdf",photo:"photos/153_Hnin Ei Phyu.jpg?v=2",dept:"electrical"},
+  {no:154,name:"Hnin Shwe Chuu Myat",file:"pdfs/154_Hnin Shwe Chuu Myat.pdf",photo:"photos/154_Hnin Shwe Chuu Myat.jpg",dept:"civil"},
+  {no:155,name:"Min Khant Phyoe",file:"pdfs/155_Min Khant Phyoe.pdf",photo:"photos/155_Min Khant Phyoe.jpg",dept:"civil"},{no:156,name:"Yin Yin Nyein Aung",file:"pdfs/156_Yin Yin Nyein Aung.pdf",photo:"photos/156_Yin Yin Nyein Aung.jpg?v=fix2",dept:"electrical"},{no:157,name:"Kyaw Zayar Win",file:"pdfs/157_Kyaw Zayar Win.pdf",photo:"photos/157_Kyaw Zayar Win.jpg?v=fix2",dept:"electrical"},{no:158,name:"Kaung Khant Wai",file:"pdfs/158_Kaung Khant Wai.pdf",photo:"photos/158_Kaung Khant Wai.jpg?v=fix2",dept:"civil"},{no:159,name:"Lae Yi Win",file:"pdfs/159_Lae Yi Win.pdf",photo:"photos/159_Lae Yi Win.jpg",dept:"civil"},{no:160,name:"Thuzar Myint",file:"pdfs/160_Thuzar Myint.pdf",photo:"photos/160_Thuzar Myint.jpg",dept:"civil"},{no:161,name:"Aye Thandar Aung",file:"pdfs/161_Aye Thandar Aung.pdf",photo:"photos/161_Aye Thandar Aung.jpg",dept:"civil"},{no:162,name:"Thi Ha Soe",file:"pdfs/162_Thi Ha Soe.pdf",photo:"photos/162_Thi Ha Soe.jpg",dept:"civil"},{no:163,name:"Tin Moh Moh Oo",file:"pdfs/163_Tin Moh Moh Oo.pdf",photo:"photos/163_Tin Moh Moh Oo.jpg",dept:"architecture"},{no:164,name:"Pan Lae Lae Mon",file:"pdfs/164_Pan Lae Lae Mon.pdf",photo:"photos/164_Pan Lae Lae Mon.jpg",dept:"civil"},{no:165,name:"Nay Hlaing Tun",file:"pdfs/165_Nay Hlaing Tun.pdf",photo:"photos/165_Nay Hlaing Tun.jpg",dept:"civil"},{no:166,name:"Thein Htaik Soe",file:"pdfs/166_Thein Htaik Soe.pdf",photo:"photos/166_Thein Htaik Soe.jpg",dept:"mechanical"},{no:167,name:"Zaw Htwe Aung",file:"pdfs/167_Zaw Htwe Aung.pdf",photo:"photos/167_Zaw Htwe Aung.jpg",dept:"electrical"},{no:168,name:"Kaung Htet Lin",file:"pdfs/168_Kaung Htet Lin.pdf",photo:"photos/168_Kaung Htet Lin.jpg",dept:"civil"},{no:169,name:"Phyo Hein Kyaw",file:"pdfs/169_Phyo Hein Kyaw.pdf",photo:"photos/169_Phyo Hein Kyaw.jpg",dept:"civil"},
+  {no:170,name:"Yamin Ohnmar",file:"pdfs/170_Yamin_Ohnmar.pdf",photo:"photos/170_Yamin_Ohnmar.jpg",dept:"civil"},
+  {no:171,name:"Phu Mon Myat Lwin",file:"pdfs/171_Phu_Mon_Myat_Lwin.pdf",photo:"photos/171_Phu_Mon_Myat_Lwin.jpg",dept:"civil"},
+  {no:172,name:"Zin Nyein Thu",file:"pdfs/172_Zin_Nyein_Thu.pdf",photo:"photos/172_Zin_Nyein_Thu.jpg",dept:"civil"},
+  {no:173,name:"Su Lae Naing",file:"pdfs/173_Su_Lae_Naing.pdf",photo:"photos/173_Su_Lae_Naing.jpg",dept:"civil"},
+  {no:174,name:"Kaing Zin Zin U",file:"pdfs/174_Kaing_Zin_Zin_U.pdf",photo:"photos/174_Kaing_Zin_Zin_U.jpg",dept:"electrical"}
+];
+
+let currentPage = 1;
+let filtered = candidates;
+let currentDept = 'all';
+
+function setFilter(dept) {
+  currentDept = dept;
+  document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  applyFilters();
+}
+
+function applyFilters() {
+  const q = document.getElementById('searchBox').value.trim().toLowerCase();
+  filtered = candidates.filter(c => {
+    const matchDept = currentDept === 'all' || c.dept === currentDept;
+    const matchName = !q || c.name.toLowerCase().includes(q);
+    return matchDept && matchName;
+  });
+  currentPage = 1;
+  render();
+}
+
+
+
+const deptLabel = {civil:'土木',architecture:'建築',electrical:'電気・電子',mechanical:'機械',it:'IT・情報',other:'その他'};
+
+function cardHTML(c) {
+  const dept = c.dept || 'other';
+  const label = deptLabel[dept] || 'その他';
+  const badge = '<div class="dept-badge dept-' + dept + '">' + label + '</div>';
+  return '<div class="card">'
+    + '<div class="card-photo">'
+    + '<img src="' + c.photo + '" alt="' + c.name + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+    + '<div class="placeholder" style="display:none">&#128100;</div>'
+    + '</div>'
+    + '<div class="card-info">'
+    + badge
+    + '<div class="card-no">No.' + String(c.no).padStart(3,'0') + '</div>'
+    + '<div class="card-name">' + c.name + '</div>'
+    + '<a class="card-btn" href="' + c.file + '" target="_blank">&#128196; 履歴書を開く</a>'
+    + '</div></div>';
+}
+
+function buildPagination(total, page) {
+  const totalPages = Math.ceil(total / PER_PAGE);
+  const pag = document.getElementById('pagination');
+  const info = document.getElementById('pageInfo');
+
+  if (totalPages <= 1) { pag.innerHTML = ''; info.textContent = ''; return; }
+
+  const start = (page-1)*PER_PAGE + 1;
+  const end = Math.min(page*PER_PAGE, total);
+  info.textContent = `${start}〜${end}件を表示（全${total}件）`;
+
+  let html = `<button class="btn-page" onclick="goPage(${page-1})" ${page===1?'disabled':''}>&#8249; 前へ</button>`;
+  html += '<div class="page-nums">';
+  for (let i=1; i<=totalPages; i++) {
+    html += `<button class="btn-page ${i===page?'active':''}" onclick="goPage(${i})">${i}</button>`;
+  }
+  html += '</div>';
+  html += `<button class="btn-page" onclick="goPage(${page+1})" ${page===totalPages?'disabled':''}>次へ &#8250;</button>`;
+  pag.innerHTML = html;
+}
+
+function render() {
+  const total = filtered.length;
+  const totalPages = Math.ceil(total / PER_PAGE);
+  if (currentPage > totalPages) currentPage = 1;
+
+  const noResult = document.getElementById('noResult');
+  const grid = document.getElementById('cardGrid');
+  document.getElementById('totalCount').textContent = total;
+
+  if (total === 0) {
+    grid.innerHTML = '';
+    noResult.style.display = 'block';
+    document.getElementById('pagination').innerHTML = '';
+    document.getElementById('pageInfo').textContent = '';
+    return;
+  }
+  noResult.style.display = 'none';
+
+  const start = (currentPage-1) * PER_PAGE;
+  const pageItems = filtered.slice(start, start + PER_PAGE);
+  grid.innerHTML = pageItems.map(cardHTML).join('');
+  buildPagination(total, currentPage);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function goPage(p) {
+  const totalPages = Math.ceil(filtered.length / PER_PAGE);
+  if (p < 1 || p > totalPages) return;
+  currentPage = p;
+  render();
+}
+
+function onSearch() {
+  const q = document.getElementById('searchBox').value.trim().toLowerCase();
+  applyFilters();
+}
+
+render();
+</script>
+</body>
+</html>
