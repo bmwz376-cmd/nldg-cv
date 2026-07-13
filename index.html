@@ -62,7 +62,7 @@ footer{text-align:center;padding:28px;color:#aaa;font-size:12px;}
   <div class="header-inner">
     <div>
       <div class="logo">株式会社 <span>NL-DG</span>　求職者データベース</div>
-      <div class="header-sub" style="margin-top:6px;">最終更新：2026年07月12日　｜　本日：2026年07月11日</div>
+      <div class="header-sub" style="margin-top:6px;">最終更新：2026年7月13日　｜　本日：2026年7月13日</div>
     </div>
     <div class="header-sub">社内専用ページ</div>
   </div>
@@ -70,7 +70,7 @@ footer{text-align:center;padding:28px;color:#aaa;font-size:12px;}
 <div class="wrap">
   <div class="stats">
     <div>
-      <div class="stat-num" id="totalCount">169</div>
+      <div class="stat-num" id="totalCount">0</div>
       <div class="stat-label">登録求職者数</div>
     </div>
     <div style="margin-left:auto;color:#888;font-size:13px;">名前で検索できます 🔍</div>
@@ -159,7 +159,7 @@ const candidates = [
   {no:60,name:"Zin Nwe Soe",file:"pdfs/060_Zin Nwe Soe.pdf",photo:"photos/060_Zin Nwe Soe.jpg",dept:"mechanical"},
   {no:61,name:"Khin Khin Thi",file:"pdfs/061_KHIN KHIN THI.pdf",photo:"photos/061_KHIN KHIN THI.jpg",dept:"other"},
   {no:62,name:"Thiha Soe",file:"pdfs/062_THIHA.pdf",photo:"photos/062_THIHA.jpg",dept:"civil"},
-  {no:62,name:"Thiha Soe",file:"pdfs/062_THIHA.pdf",photo:"photos/062_THIHA.jpg",dept:"civil"},
+  ,
   {no:63,name:"Zin Win Nwe",file:"pdfs/063_Zin Win Nwe.pdf",photo:"photos/063_Zin Win Nwe.jpg",dept:"civil"},
   {no:64,name:"Theint Thinzar Aung",file:"pdfs/064_Theint Thinzar Aung.pdf",photo:"photos/064_Theint Thinzar Aung.jpg",dept:"civil"},
   {no:65,name:"Nay Myo Chan",file:"pdfs/065_Nay Myo Chan.pdf",photo:"photos/065_Nay Myo Chan.jpg",dept:"civil"},
@@ -258,6 +258,9 @@ const candidates = [
   {no:172,name:"Su Lae Naing",file:"pdfs/172_Su_Lae_Naing.pdf",photo:"photos/172_Su_Lae_Naing.jpg",dept:"civil"},
   {no:173,name:"Kaing Zin Zin U",file:"pdfs/173_Kaing_Zin_Zin_U.pdf",photo:"photos/173_Kaing_Zin_Zin_U.jpg",dept:"electrical"}
 ];
+
+// 登録者数を自動反映
+document.getElementById('totalCount').textContent = candidates.length;
 
 let currentPage = 1;
 let filtered = candidates;
