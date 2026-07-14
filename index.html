@@ -288,17 +288,6 @@ function applyFilters() {
   render();
 }
 
-// 日本在中フラグ読み込み（初回ロード時）
-fetch('japan_residents.json?t=' + Date.now())
-  .then(function(r){ return r.ok ? r.json() : {}; })
-  .then(function(data){
-    candidates.forEach(function(c){
-      var rec = data[String(c.no)];
-      if (rec && rec.inJapan) c.inJapan = true;
-    });
-    filterCandidates();
-  })
-  .catch(function(){ filterCandidates(); });
 
 
 
@@ -381,6 +370,18 @@ function onSearch() {
 }
 
 render();
+
+// 日本在中フラグ読み込み（初回ロード時）
+fetch('japan_residents.json?t=' + Date.now())
+  .then(function(r){ return r.ok ? r.json() : {}; })
+  .then(function(data){
+    candidates.forEach(function(c){
+      var rec = data[String(c.no)];
+      if (rec && rec.inJapan) c.inJapan = true;
+    });
+    render();
+  })
+  .catch(function(){ render(); });
 </script>
 </body>
 </html>
