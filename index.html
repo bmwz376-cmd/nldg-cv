@@ -285,7 +285,10 @@ function applyFilters() {
     return matchDept && matchName;
   });
   currentPage = 1;
-  // 日本在中フラグ読み込み
+  render();
+}
+
+// 日本在中フラグ読み込み（初回ロード時）
 fetch('japan_residents.json?t=' + Date.now())
   .then(function(r){ return r.ok ? r.json() : {}; })
   .then(function(data){
@@ -293,10 +296,9 @@ fetch('japan_residents.json?t=' + Date.now())
       var rec = data[String(c.no)];
       if (rec && rec.inJapan) c.inJapan = true;
     });
-    render();
+    filterCandidates();
   })
-  .catch(function(){ render(); });
-}
+  .catch(function(){ filterCandidates(); });
 
 
 
