@@ -1,0 +1,872 @@
+{
+  "1": {
+    "name": "Kyo Tagoo Naing",
+    "address": "神奈川県横浜市港南区芹が谷5-44-4",
+    "inJapan": true
+  },
+  "2": {
+    "name": "Thu Yein Win",
+    "address": "83 Chit Ari Alley,Khlong Chokhun Sing,Wang Thonlang,Bangkok,10310,Thailand",
+    "inJapan": false
+  },
+  "3": {
+    "name": "Htet Myat Win",
+    "address": "HO CHI MINH市、Go Vap 区、Phuong 1、Nguyen Binh Khiem 通り 81/1",
+    "inJapan": false
+  },
+  "4": {
+    "name": "Wai Yan Tun",
+    "address": "Mandalay, Myanmar.",
+    "inJapan": false
+  },
+  "5": {
+    "name": "Ohnmar Thet",
+    "address": "Hpa Yar Ngoke To Village, Kayin Su , Bago Township, Bago Region",
+    "inJapan": false
+  },
+  "6": {
+    "name": "Kyaw Kyaw Min",
+    "address": "〒356-0205 埼玉県ふじみ野市丸山 4番18号 第二丸山シャンテ 102号室",
+    "inJapan": true
+  },
+  "7": {
+    "name": "Theint Nandar Soe",
+    "address": "マグェ　、ミヤンマ",
+    "inJapan": false
+  },
+  "8": {
+    "name": "Hsu Mon Aung",
+    "address": "NO.15, AUNGTHAPYAY 4thStreet, North Ward, Htaukkyant, Mingalardon Township, Yangon Division.",
+    "inJapan": false
+  },
+  "9": {
+    "name": "Han Ni Su San",
+    "address": "3(B),State 2 Street,Pwekyo Quarter,Magway",
+    "inJapan": false
+  },
+  "10": {
+    "name": "Ku Ku Myat",
+    "address": "No.41, Bayint Naung 2 street, Hlaing Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "11": {
+    "name": "Thwe Mon Oo",
+    "address": "No.5, U Phoe Kyar Street, Kantawkalay (Taung) Ward, Mingalartaungnyunt Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "12": {
+    "name": "Su Lai Nadi",
+    "address": "Thandar (8) Street, North Okkalapa Township, Yangon Region, Myanmar",
+    "inJapan": false
+  },
+  "13": {
+    "name": "Su Wai Phyoe",
+    "address": "Yangon, Myanmar",
+    "inJapan": false
+  },
+  "14": {
+    "name": "Htet Hmu Swe",
+    "address": "No 32, 85 Street, Mahamuni Pagoda West Gate, ChanMyaTharZai Township, Mandalay , Myanmar.",
+    "inJapan": false
+  },
+  "15": {
+    "name": "Phyu Phyu Zin",
+    "address": "No.17,2nd floor,Htee Tan 3rd street ,Kyee Myin Daing township,Yangon",
+    "inJapan": false
+  },
+  "16": {
+    "name": "Win Shwe Yee Nwe",
+    "address": "No.323(D)5th street Thamine,（1）Ward, Mayangone Township,Yangon,Myanmar",
+    "inJapan": false
+  },
+  "17": {
+    "name": "Wai Wai Lwin",
+    "address": "No.160, Baho Street, Sanchaung Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "18": {
+    "name": "Mya Thu Zar",
+    "address": "No 2, Gandamar Street, Pauk Koung Ward , Mingalardong Township, Yangon ,Myanmar",
+    "inJapan": false
+  },
+  "19": {
+    "name": "Wai Mon Kyaw",
+    "address": "Hledan （2）street ,Yangon ,Myanmar",
+    "inJapan": false
+  },
+  "20": {
+    "name": "Zezawah Soe",
+    "address": "Moemakha Street,Mont Let Saung Taung Quarter,Sanchaung, Yangon , Myanmar",
+    "inJapan": false
+  },
+  "21": {
+    "name": "Shwin Lai Tun",
+    "address": "Seikkhawa Village, Pakokku Township, Myanmar",
+    "inJapan": false
+  },
+  "22": {
+    "name": "Tin Zar Oo",
+    "address": "G17,Mayang Myaing Street, Mayang Ward, Hlaing Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "23": {
+    "name": "Aye Aye Khet",
+    "address": "601.A2.Starcity.Thanlyin",
+    "inJapan": false
+  },
+  "24": {
+    "name": "Pwint Phyu Khaing",
+    "address": "大阪府、吹田市、江坂町，５丁目１番５号、（４０２）号",
+    "inJapan": true
+  },
+  "25": {
+    "name": "Pyae Sandy Kyaw",
+    "address": "No.49, Zayyawadi Street, Thandadar Ward, Sanchaung Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "26": {
+    "name": "Aye Aye Maw",
+    "address": "No.367, Thuta 3 street, 4 Ward, Southokkalapa Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "27": {
+    "name": "Chan Myae Hein",
+    "address": "あわら市、福井県",
+    "inJapan": true
+  },
+  "28": {
+    "name": "R Zar Ni",
+    "address": "Thazin Hostel, Myanmar Maritime University, Thanlyin, Yangon",
+    "inJapan": false
+  },
+  "29": {
+    "name": "Nwe Zin Myint",
+    "address": "No.14,Wanna Housing, Insein Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "30": {
+    "name": "Thazin Htwe",
+    "address": "51 Street, Pazundaung Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "31": {
+    "name": "Naw Eh May Gay",
+    "address": "No.28, Thar Yar Aye Street, 3 Ward, Mayagone Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "32": {
+    "name": "Su Mon Thwe",
+    "address": "No.(108), Thukha Myaing Street, Hlaing Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "33": {
+    "name": "Ei Ei Phyo",
+    "address": "No.26, Bo Aung San Street,(83) Ward, Dagon Seikkan Township,Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "34": {
+    "name": "Aung Khant Zaw",
+    "address": "〒121-0807 東京都足立区伊興本町２丁目１３− 10",
+    "inJapan": true
+  },
+  "35": {
+    "name": "Thurein Pyae Wun",
+    "address": "東京都葛飾区小菅1丁目29番13号トーキョーベータ小菅３　202号室",
+    "inJapan": true
+  },
+  "36": {
+    "name": "Yan Lin Zaw",
+    "address": "No. (1359) Damaryone side Street (2), Yezutaung Address Village, Htaunkkyaunt Township, Yangon",
+    "inJapan": false
+  },
+  "37": {
+    "name": "Hay Mhann Lin",
+    "address": "〒 900-0014 沖縄那覇市松尾 1-10-20,レオペレス松尾 203",
+    "inJapan": true
+  },
+  "38": {
+    "name": "Thet Myat Noe Oo",
+    "address": "No.12, Sabe St, Sittown Avenue, Dagon Seikkan Township, Yangon , Myanmar.",
+    "inJapan": false
+  },
+  "39": {
+    "name": "Me Me Zin",
+    "address": "No-1262 、 Mya Yadanar Street, 24 Ward, South Dagon Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "40": {
+    "name": "Ye Min Tun",
+    "address": "東京都豊島区池袋3丁目15－12山手ハイツ301号",
+    "inJapan": true
+  },
+  "41": {
+    "name": "Tun Win Naing",
+    "address": "Yangon, Myanmar",
+    "inJapan": false
+  },
+  "42": {
+    "name": "Htet Htet Eaint Myat Chel",
+    "address": "No.299\\301, (40) Street, 9 Ward, KyayktadaTownship, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "43": {
+    "name": "Khin Cho Cho",
+    "address": "No.12, Padauk Road, Shwe Pyi Thar Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "44": {
+    "name": "Khine Zin Moe",
+    "address": "ミャンマー・タンリン市・アムダン区・メッタ通り 106 番",
+    "inJapan": false
+  },
+  "45": {
+    "name": "Myat Thazin Htun",
+    "address": "No.13/23, Shwe Wah Street, Marn Aung Ward, Tamwe Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "46": {
+    "name": "Poe Thandar Tun",
+    "address": "No.1001/ヤタワディ 14 番地、13 ブロック、サウスオカラパ郡区、ヤンゴン、ミャンマー",
+    "inJapan": false
+  },
+  "47": {
+    "name": "Su Thinzar Win",
+    "address": "No.49, Ahthawka Street, Nat Chaung Ward, Tamwe.",
+    "inJapan": false
+  },
+  "48": {
+    "name": "Thu Rein Myint Mo Htet Aung",
+    "address": "No.(40), 7 通り, パテイン ニュン地区 ミンガラール・タウン・ニュン郡区, ヤンゴン.",
+    "inJapan": false
+  },
+  "49": {
+    "name": "Win Moe Kyaw",
+    "address": "Thanthumar Road, Myanmar Gone Yaung Avenue, Tamwe Township, Yangon",
+    "inJapan": false
+  },
+  "50": {
+    "name": "Ye Naing Soe",
+    "address": "Phalon village, Taikkyi Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "51": {
+    "name": "Zar Zar Min",
+    "address": "No.32. Aung-Mingalar Street , Tammwe Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "52": {
+    "name": "Thet Htar Swe",
+    "address": "東京都足立区舎人1-14-11 TOKYOβ舎人11 106号室",
+    "inJapan": true
+  },
+  "53": {
+    "name": "Nang Khin Thu Zar Aung",
+    "address": "No(116/1B), Thayet Myaing Street, 7 Ward, Hlaing Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "54": {
+    "name": "Nyo Nyo Htwe",
+    "address": "No 137, Baho Road, BRB bus-top, Kamaryut Township, Yangon",
+    "inJapan": false
+  },
+  "55": {
+    "name": "Thu Zar Win",
+    "address": "Thamadi (3) Street, No-6 Quarter, Thingangyun Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "56": {
+    "name": "Kaung Myat Kyaw",
+    "address": "〒212-0055 Kanagawa, Kawasaki, Saiwai Ward, Minamikase, 4-chōme−11−32 レオパレスＡＮＮＥＸシャルム-309 号",
+    "inJapan": true
+  },
+  "57": {
+    "name": "Ei Thiri Kyaw",
+    "address": "36th street,bet 70th x71st street,Mahar Aung Myay Township,Mandalay,Myanmar.",
+    "inJapan": false
+  },
+  "58": {
+    "name": "Htet Htet",
+    "address": "神奈川県川崎市川崎区小田栄1-2-7ロバートミリカン2 09",
+    "inJapan": true
+  },
+  "59": {
+    "name": "Aung Pyae Sone",
+    "address": "No(58)Sanpya(6)street,Thingangyun Township,Yangon,Myanmar.",
+    "inJapan": false
+  },
+  "60": {
+    "name": "Zin Nwe Soe",
+    "address": "14 Soi Sahakon 2, Hua Mak, Bang Kapi, Bangkok, Thailand",
+    "inJapan": false
+  },
+  "61": {
+    "name": "Khin Khin Thi",
+    "address": "高知県安芸郡安田町大字安田 (Kochi-ken, Aki-gun, Yasuda-cho, Oaza Yasuda)",
+    "inJapan": true
+  },
+  "62": {
+    "name": "Thiha Soe",
+    "address": "679-2214　兵庫県神崎郡福崎町福崎新366番地1アロッジオアルビコッカ101号",
+    "inJapan": true
+  },
+  "63": {
+    "name": "Zin Win Nwe",
+    "address": "No.139,Myo Ma Nyein Street,26Block,South Dagon Township,Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "64": {
+    "name": "Theint Thinzar Aung",
+    "address": "No.137,4A,Baho Road,Kamayut Township,Yangon",
+    "inJapan": false
+  },
+  "65": {
+    "name": "Nay Myo Chan",
+    "address": "No. (45), Mawlamyine Township, Mon State",
+    "inJapan": false
+  },
+  "66": {
+    "name": "Hay Mann Oo",
+    "address": "No.64,Inwa Township,Yangon,Myanmar. Street,Kyaukmyaunggyi Ward,Tamwe",
+    "inJapan": false
+  },
+  "67": {
+    "name": "Aung Myo Oo",
+    "address": "Shwe Pyi Thar Township, Yangon Division",
+    "inJapan": false
+  },
+  "68": {
+    "name": "La Min Soe",
+    "address": "Sanchoung Township,Yangon Division",
+    "inJapan": false
+  },
+  "69": {
+    "name": "Phoo Myat Kay Khaing",
+    "address": "Gyar Taw Ya Street, Bahan Township, Yangon",
+    "inJapan": false
+  },
+  "70": {
+    "name": "Si Thu Min Htet",
+    "address": "No.472/ 10 Ward /Shwepyitar Township,Yangon Division",
+    "inJapan": false
+  },
+  "71": {
+    "name": "Swan Gone Yee",
+    "address": "North Okkalapa Township,Yangon Division",
+    "inJapan": false
+  },
+  "72": {
+    "name": "Tin Nilar Myo",
+    "address": "Gyaw Taw Ya Street , Bahan Township, Yangon",
+    "inJapan": false
+  },
+  "73": {
+    "name": "Zin Min Htet",
+    "address": "No. 70/Myat Thu Rein Street/U Mya Yek Kut/Kyimyint Taing Township, Yangon Division",
+    "inJapan": false
+  },
+  "74": {
+    "name": "Aye Phyo Han",
+    "address": "No.505,KanTaw Road,ThinGanGyun Township,Yangon",
+    "inJapan": false
+  },
+  "75": {
+    "name": "Ei Mon Mon Kyaw",
+    "address": "11301 Kyauktan township ,Yangon",
+    "inJapan": false
+  },
+  "76": {
+    "name": "Kay Zin Soe",
+    "address": "KYAUKPADAUNG TOWNSHIP, MANDALAY, MYANMAR",
+    "inJapan": false
+  },
+  "77": {
+    "name": "Kyaw Thu Tun",
+    "address": "No 32, Min Din Street, Thingangyun Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "78": {
+    "name": "Thet Ngon Phoo",
+    "address": "No.101,Nga Moe Yeik 9th Street, Thingyankun Township, Yangon",
+    "inJapan": false
+  },
+  "79": {
+    "name": "July Moe Oo",
+    "address": "SouthOkkalapa Township, Yangon Division, Myanmar",
+    "inJapan": false
+  },
+  "80": {
+    "name": "Tin Tin Hlaing",
+    "address": "No.11/14 , Min Lan Street, Kyaik KaSan Ward,Bahan Township, Yangon,Myanmar",
+    "inJapan": false
+  },
+  "81": {
+    "name": "Hnin Wyut Yi Win",
+    "address": "ヤンゴン、ミヤンマー",
+    "inJapan": false
+  },
+  "82": {
+    "name": "Hnin Nu Nu Aung",
+    "address": "マンダレイ町、マンダレイ区分、ミャンマー",
+    "inJapan": false
+  },
+  "83": {
+    "name": "Thandar May Oo",
+    "address": "タケダ，ヤンゴン (Takeda, Yangon)",
+    "inJapan": false
+  },
+  "84": {
+    "name": "Phyu Thae Wai",
+    "address": "千葉県香取市",
+    "inJapan": true
+  },
+  "85": {
+    "name": "Wai Wai Aung",
+    "address": "北海道釧路市芦野 5 丁目 25 番 6 号 メゾンド F2 2 03 号室",
+    "inJapan": true
+  },
+  "86": {
+    "name": "Ei Ei Khaing",
+    "address": "58 Street, Melzigone Street, 7 Ward, Hlaing Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "87": {
+    "name": "Win Lalyar Paing",
+    "address": "11401 No. 469, Kyansitthar Street, 15 Ward, Hlaing Thar Yar Township, Yangon Division, Myanmar",
+    "inJapan": false
+  },
+  "88": {
+    "name": "Wai Zin Ko",
+    "address": "No.88,157 Stree,Tamwe Township,Yangon,Myanmar",
+    "inJapan": false
+  },
+  "89": {
+    "name": "Ei Thinzar Oo",
+    "address": "N0.26，Mezikone Street,Hlaing Township",
+    "inJapan": false
+  },
+  "90": {
+    "name": "Jue Jue Khin",
+    "address": "N0.2 Ward,Lewe Township,Nay Pyi Taw,Myanmar.",
+    "inJapan": false
+  },
+  "91": {
+    "name": "Maung Thant",
+    "address": "Phuket, Thailand",
+    "inJapan": false
+  },
+  "92": {
+    "name": "Aung Nyein",
+    "address": "No.(83) Bayathokedi Str., Kyaukmyaung, Tarmwe Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "93": {
+    "name": "Zin Thu Win",
+    "address": "PayKone Village, Sipotetara Village Track, Khin U Township, Sagaing Division.",
+    "inJapan": false
+  },
+  "94": {
+    "name": "Htet Aung Aung",
+    "address": "209 The Origin Ram Interchange, No.333/594 Unit 1720 121/2 Ramkhamhaeng Rd, MinBuri, Bangkok 10510, Thailand",
+    "inJapan": false
+  },
+  "95": {
+    "name": "Win Pyae Pyae Soe",
+    "address": "",
+    "inJapan": false
+  },
+  "96": {
+    "name": "Hsuzar Moe Thu",
+    "address": "",
+    "inJapan": false
+  },
+  "97": {
+    "name": "Han Zay Soe",
+    "address": "",
+    "inJapan": false
+  },
+  "98": {
+    "name": "Than Zin Yadanar",
+    "address": "San Chaung Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "99": {
+    "name": "Cherry Zaw",
+    "address": "No(2) Kamma, Pakokku Township, Magwe Division",
+    "inJapan": false
+  },
+  "100": {
+    "name": "San San Htay",
+    "address": "Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "101": {
+    "name": "May Thu Kyaw",
+    "address": "No.7 Aung Hla Yate Thar Street, Hlaing, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "102": {
+    "name": "Su Yin Nwe Htun",
+    "address": "No.524, Padamyarphat Street, North Okkalapa Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "103": {
+    "name": "Thi Thi Soe",
+    "address": "〒 11041 ,(No.15) /(3)Ward / Hleden ,Kamaryut Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "104": {
+    "name": "Khin Yadanar Oo",
+    "address": "No.12, Yone Gyi Street, Kyi Myin Tine Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "105": {
+    "name": "Thazin Phyo Wai",
+    "address": "No.108, Thukha Myaing Street, Hlaing Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "106": {
+    "name": "Thet Htoo Zan",
+    "address": "埼玉県さいたま市桜区西堀５ー１３ー５ レオパレスグランダム",
+    "inJapan": true
+  },
+  "107": {
+    "name": "Kyaw Naing Min Htet",
+    "address": "茨城県 ひたちなか市 高場3-8-4グレース　コート24MK- H-204",
+    "inJapan": true
+  },
+  "108": {
+    "name": "Naing Htun Oo",
+    "address": "東京都立川市錦町 1 丁目 15-29 マイステージ立川 401 号室",
+    "inJapan": true
+  },
+  "109": {
+    "name": "Kyaw Thu Ya",
+    "address": "福井県あわら市矢地 29 字東垣内 12 番地 1",
+    "inJapan": true
+  },
+  "110": {
+    "name": "Htet Htet Aung",
+    "address": "〒 544-0032 Osaka, Ikuno Ward, Nakagawanishi, 1-chōme−2−17 レオパレス ZIOUNVIER 201",
+    "inJapan": true
+  },
+  "111": {
+    "name": "Phyo Min Thant",
+    "address": "〒 661-0983 兵庫県尼崎市口田中 1-16-5 レオパレスカリヨ尼崎 107 号室",
+    "inJapan": true
+  },
+  "112": {
+    "name": "Hnin Myat Moe",
+    "address": "No.85,Byaing Yae Oh Sin Street, Tamwe Township,Yangon, Myanmar",
+    "inJapan": false
+  },
+  "113": {
+    "name": "Myo Myat Sandar",
+    "address": "Taung Sun , Belin Township , Mon State",
+    "inJapan": false
+  },
+  "114": {
+    "name": "Pyae Phyo Ko Ko",
+    "address": "バンコク,バンカピ,フアマック,ソイ 52 〒 52 Alley, Hua Mak, Bang Kapi, Bangkok Arnusorn Court 5(AC5)",
+    "inJapan": false
+  },
+  "115": {
+    "name": "Zaw Latt Tun",
+    "address": "B-11, Hledan Street, Kamayut Township, Yangon Division",
+    "inJapan": false
+  },
+  "116": {
+    "name": "Aye Aye Mar",
+    "address": "No.3,Thiri Myaing 3 Street, Hlaing Township, Yangon",
+    "inJapan": false
+  },
+  "117": {
+    "name": "Shwe Wuit Yee Oo",
+    "address": "Aichi Prefecture (愛知県). The document only specifies the prefecture and does not provide a street-level address for her current residence in Japan.",
+    "inJapan": true
+  },
+  "118": {
+    "name": "Hlaing Bwar Aung",
+    "address": "埼玉県熊谷市佐谷田３９１６番地3ポートステージ熊谷２０２",
+    "inJapan": true
+  },
+  "119": {
+    "name": "Aye Chan Paing",
+    "address": "〒615-0883 京都市右京区西京極南大入町 35 番地 RAY 西京極 105",
+    "inJapan": true
+  },
+  "120": {
+    "name": "Khine Zin Zin Oo",
+    "address": "熊本県上益城郡嘉島町大字上仲間100番地",
+    "inJapan": true
+  },
+  "121": {
+    "name": "Phyu Sin Thaw",
+    "address": "〒6200856 京都府 福知山市 土師宮町２丁目１６３番地 レオパレスマルイト 3 208号",
+    "inJapan": true
+  },
+  "122": {
+    "name": "Soe Nyi Nyi Htut",
+    "address": "バンコク、タイ",
+    "inJapan": false
+  },
+  "123": {
+    "name": "Wai Yan Naing",
+    "address": "7/751, Harkhar street, Dagon Myothit East Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "124": {
+    "name": "Nadi Oo",
+    "address": "堺市南区桃山台 1 丁 3 番４―１１０号",
+    "inJapan": true
+  },
+  "125": {
+    "name": "Hnin Wai Moe",
+    "address": "兵庫県神戸市中央区元町通5丁目６番８ラピッド元町８０１号",
+    "inJapan": true
+  },
+  "126": {
+    "name": "Ei Mon Lwin",
+    "address": "〒574-0003 大阪府大東市明美の里町 18-33 レオパレスセゾン 202 号室",
+    "inJapan": true
+  },
+  "127": {
+    "name": "Nyein Wut Yi Kyaw",
+    "address": "神奈川県川崎市幸区南加瀬1-5-13レオパレスヨロズヤC",
+    "inJapan": true
+  },
+  "128": {
+    "name": "Thandar Myo Thet Htun",
+    "address": "〒556-0011、大阪府 大阪市 浪速区 難波中 3 丁目 12-3 エクセル難波 906 号室",
+    "inJapan": true
+  },
+  "129": {
+    "name": "Su Thet Oo",
+    "address": "544-0001 大阪市生野区新今里5-8-3ユーハイツ今里202",
+    "inJapan": true
+  },
+  "130": {
+    "name": "Myo Thiri Kyaw",
+    "address": "No.1661,Lan Thit (2) Street, Tharkata Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "131": {
+    "name": "Chan Nyein Htun",
+    "address": "三重県桑名市筒尾5丁目７－４水新ハウス",
+    "inJapan": true
+  },
+  "132": {
+    "name": "Ei Ei Khin",
+    "address": "ミャンマー、ヤンゴン地域、ライン郡区、マラミャイン通り８番、 第１６区",
+    "inJapan": false
+  },
+  "133": {
+    "name": "Hnin Aye Yin",
+    "address": "愛知県名古屋市中村区日比津町 1-17-23",
+    "inJapan": true
+  },
+  "134": {
+    "name": "Hnin Kay Khine Aung",
+    "address": "〒 271-0065 千葉県南花嶋モアクラスト 202 号",
+    "inJapan": true
+  },
+  "135": {
+    "name": "Mi Mi Kyaw",
+    "address": "No.15, Myitkyine Ward, Aung Mingalar Street, Pakokku Township, Myanmar",
+    "inJapan": false
+  },
+  "136": {
+    "name": "Poe Ei Naing",
+    "address": "No33 Zawtika Street,Tamwe Township，Yangon，Myanmar",
+    "inJapan": false
+  },
+  "137": {
+    "name": "Yamone Myint Myat Htoo",
+    "address": "バンコク, タイ (Bangkok, Thailand)",
+    "inJapan": false
+  },
+  "138": {
+    "name": "Mi Mi Shin",
+    "address": "Tamwe Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "139": {
+    "name": "Nay Lin Oo",
+    "address": "114D, 55*54, Chanmyatharzi, Mandalay",
+    "inJapan": false
+  },
+  "140": {
+    "name": "Zin Mar Phyo",
+    "address": "No.103, Ka/6 Street, Myothit (Ka + Kha)Quarter, Insein Township, Yangon, Myanmar.",
+    "inJapan": false
+  },
+  "141": {
+    "name": "Cho Cho Win",
+    "address": "No.17, Pyiyeikmon Housing (6) Ward, Kamaryut Township, Yangon, Myanmar",
+    "inJapan": false
+  },
+  "142": {
+    "name": "Aye Kitt Kitt Khaing",
+    "address": "The current residential address of Aye Khit Khit Khine is: Yangon,Dala Township,Engyi East Ward,Minye Kyaw Swar Street,71B",
+    "inJapan": false
+  },
+  "143": {
+    "name": "Khin Yadanar Soe",
+    "address": "ヤンゴン、ミャンマー",
+    "inJapan": false
+  },
+  "144": {
+    "name": "Nandar Khaing",
+    "address": "Myo condominium ,Mya Zayar street,Kamaryut Township",
+    "inJapan": false
+  },
+  "145": {
+    "name": "Thet Hmue Wai",
+    "address": "No.64,Win Thaw Dar Street, Kamayut Township, Yangon , Myanmar",
+    "inJapan": false
+  },
+  "146": {
+    "name": "Ei Chit Phoo",
+    "address": "B(6)Street,Yuzana Garden City,Yangon Myanmar",
+    "inJapan": false
+  },
+  "147": {
+    "name": "Ei Hnin Phyu",
+    "address": "No.10, Narnattaw Street, Karmaryut, Yangon",
+    "inJapan": false
+  },
+  "148": {
+    "name": "Min Min Moe Khaing",
+    "address": "ナッマウック 道、 アウンボーガ 区、町番地４",
+    "inJapan": false
+  },
+  "149": {
+    "name": "Hnin Mhon Phoo",
+    "address": "No.115 Sa Street Hlaing Township Yangon",
+    "inJapan": false
+  },
+  "150": {
+    "name": "Wai Wai Myint Thein",
+    "address": "No 745,Sanpya Chan Street,Insein Township,Yangon",
+    "inJapan": false
+  },
+  "151": {
+    "name": "Khaing Zin Lin",
+    "address": "Magway Township, Magway Division , Myanmar",
+    "inJapan": false
+  },
+  "152": {
+    "name": "Hnin Ei Phyu",
+    "address": "55 Street, Kan Nar Street, Botahtaung Township, Yangon Division, Myanmar",
+    "inJapan": false
+  },
+  "153": {
+    "name": "Hnin Shwe Chuu Myat",
+    "address": "Sine Tan Street,Okkan,Taikkyi Township,Yangon",
+    "inJapan": false
+  },
+  "154": {
+    "name": "Min Khant Phyoe",
+    "address": "No. (164) Ashae Gone Street, Sanchaung Township, Yangon",
+    "inJapan": false
+  },
+  "155": {
+    "name": "Yin Yin Nyein Aung",
+    "address": "The current residential address of the person is No (5) Kokkine Avenue Street , Golden Valley (2) Ward , Yangon Region , Myanmar.",
+    "inJapan": false
+  },
+  "156": {
+    "name": "Kyaw Zayar Win",
+    "address": "Nat Mauk Township, Magway Division , Myanmar",
+    "inJapan": false
+  },
+  "157": {
+    "name": "Kaung Khant Wai",
+    "address": "No. 101, 5th Floor, Pyay Road, Mayangone Township, Yangon",
+    "inJapan": false
+  },
+  "158": {
+    "name": "Lae Yi Win",
+    "address": "No(272) Kaymar (2) Street, G Ward, North Oakkalapa Township, Yangon Division, Myanmar",
+    "inJapan": false
+  },
+  "159": {
+    "name": "Thuzar Myint",
+    "address": "No-12/Room-34/Malikha Street,Thingangyun Township, Yangon,Myanmar.",
+    "inJapan": false
+  },
+  "160": {
+    "name": "Aye Thandar Aung",
+    "address": "神奈川県川崎市高津区北見方3-12-28レオパレスCharm Court107",
+    "inJapan": true
+  },
+  "161": {
+    "name": "Thi Ha Soe",
+    "address": "679-2214 兵庫県神崎郡福崎町福崎新366番地1アロッジオアルビコッカ101号 (English translation: #101 Alloggio Albicocca, 366-1 Fukuzakishin, Fukuzaki-cho, Kanzaki-gun, Hyogo Prefecture 679-2214)",
+    "inJapan": true
+  },
+  "162": {
+    "name": "Tin Moh Moh Oo",
+    "address": "静岡県浜松市中央区半田山 4 丁目 29-25 レオパレス半田 204 号室",
+    "inJapan": true
+  },
+  "163": {
+    "name": "Pan Lae Lae Mon",
+    "address": "〒0450012 北海道 岩内郡 岩内町 字宮園 20-1、206 号室",
+    "inJapan": true
+  },
+  "164": {
+    "name": "Nay Hlaing Tun",
+    "address": "Bangkok, Thailand",
+    "inJapan": false
+  },
+  "165": {
+    "name": "Thein Htaik Soe",
+    "address": "Pyae Yeik Mon Housing, Hleden, Yangon",
+    "inJapan": false
+  },
+  "166": {
+    "name": "Zaw Htwe Aung",
+    "address": "The current residential address of the person is NO(66), 3A, Old Yaetar Shay Street, Kyartawya Ward, Bahan Township, Yangon.",
+    "inJapan": false
+  },
+  "167": {
+    "name": "Kaung Htet Lin",
+    "address": "石川県珠洲市上戸町北方ろ字49番1 能登復興建設作業員2号宿舎2-D1-3",
+    "inJapan": true
+  },
+  "168": {
+    "name": "Phyo Hein Kyaw",
+    "address": "5/5, Moo (7), Ek Charoen, Lak Hok, Pathum Thani, 12000.",
+    "inJapan": false
+  },
+  "169": {
+    "name": "Yamin Ohnmar",
+    "address": "〒534-0014 大阪府大阪市都島区都島北通2丁目8番7号 ノースーコート　307",
+    "inJapan": true
+  },
+  "170": {
+    "name": "Phu Mon Myat Lwin",
+    "address": "埼玉県川口市南鳩ヶ谷2丁目２９－１７－２０６",
+    "inJapan": true
+  },
+  "171": {
+    "name": "Zin Nyein Thu",
+    "address": "〒722-2211 広島県尾道市因島中庄町 295 番地の１コーポ村上 103 号 室",
+    "inJapan": true
+  },
+  "172": {
+    "name": "Su Lae Naing",
+    "address": "〒431-0201 静岡県浜松市中央区篠原町22073-2クラストピア302号室",
+    "inJapan": true
+  },
+  "173": {
+    "name": "Kaing Zin Zin U",
+    "address": "熊本県上益城郡嘉島町大字上仲間100番地",
+    "inJapan": true
+  },
+  "174": {
+    "name": "Nyan Win Tut",
+    "address": "埼玉県さいたま市南区文蔵３丁目５−３ 南ドリームマンション、２０３号室",
+    "inJapan": true
+  }
+}

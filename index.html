@@ -58,6 +58,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:#f0f4f8;color:#1a1a1a;}
 .page-nums{display:flex;gap:6px;}
 footer{text-align:center;padding:28px;color:#aaa;font-size:12px;}
 @media(max-width:600px){.grid{grid-template-columns:1fr 1fr;}.stat-num{font-size:24px;}.btn-page{padding:8px 12px;font-size:12px;}}
+.japan-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#c62828,#e53935);color:#fff;font-size:10px;font-weight:900;padding:3px 10px;border-radius:4px;letter-spacing:0.5px;margin-bottom:6px;box-shadow:0 2px 4px rgba(198,40,40,0.35);}
 </style>
 </head>
 <body>
@@ -284,7 +285,17 @@ function applyFilters() {
     return matchDept && matchName;
   });
   currentPage = 1;
-  render();
+  // 日本在中フラグ読み込み
+fetch('japan_residents.json?t=' + Date.now())
+  .then(function(r){ return r.ok ? r.json() : {}; })
+  .then(function(data){
+    candidates.forEach(function(c){
+      var rec = data[String(c.no)];
+      if (rec && rec.inJapan) c.inJapan = true;
+    });
+    render();
+  })
+  .catch(function(){ render(); });
 }
 
 
@@ -301,6 +312,7 @@ function cardHTML(c) {
     + '<div class="placeholder" style="display:none">&#128100;</div>'
     + '</div>'
     + '<div class="card-info">'
+    + (c.inJapan ? '<div class="japan-badge">日本在中</div>' : '')
     + badge
     + '<div class="card-no">No.' + String(c.no).padStart(3,'0') + '</div>'
     + '<div class="card-name">' + c.name + '</div>'
